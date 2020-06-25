@@ -1,0 +1,75 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - core.entity_view_display.comment.os2web_hearings_hearing_reply.default
+    - field.field.node.os2web_hearings_hearing_case.body
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_subtitle
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
+    - node.type.os2web_hearings_hearing_case
+  module:
+    - comment
+    - datetime
+    - file
+    - text
+    - user
+id: node.os2web_hearings_hearing_case.default
+targetEntityType: node
+bundle: os2web_hearings_hearing_case
+mode: default
+content:
+  body:
+    label: hidden
+    type: text_default
+    weight: 1
+    settings: {  }
+    third_party_settings: {  }
+    region: content
+  field_os2web_hearings_attac_doc:
+    weight: 3
+    label: above
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_os2web_hearings_end_date:
+    weight: 2
+    label: hidden
+    settings:
+      format_type: medium
+      timezone_override: ''
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_os2web_hearings_reply:
+    weight: 4
+    label: hidden
+    settings:
+      view_mode: default
+      pager_id: 0
+    third_party_settings: {  }
+    type: comment_default
+    region: content
+  field_os2web_hearings_subtitle:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  links:
+    weight: 5
+    region: content
+    settings: {  }
+    third_party_settings: {  }
+hidden:
+  field_os2web_hearings_status: true
+  field_os2web_hearings_type: true
+  langcode: true
+  search_api_excerpt: true

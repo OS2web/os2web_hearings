@@ -1,0 +1,7 @@
+name: OS2Web Hearings
+type: module
+core: 8.x
+package: OS2Web
+dependencies:
+- drupal:comment
+- drupal:text

@@ -1,0 +1,85 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - comment.type.os2web_hearings_hearing_reply
+    - field.field.comment.os2web_hearings_hearing_reply.comment_body
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_addr
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_cinf
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_city
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_conf
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_docs
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_mail
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_name
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_org
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_zip
+  module:
+    - file
+    - text
+id: comment.os2web_hearings_hearing_reply.default
+targetEntityType: comment
+bundle: os2web_hearings_hearing_reply
+mode: default
+content:
+  comment_body:
+    type: text_default
+    weight: 5
+    region: content
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+  field_os2web_hearings_reply_addr:
+    type: string
+    weight: 2
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+  field_os2web_hearings_reply_city:
+    weight: 4
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_os2web_hearings_reply_docs:
+    weight: 6
+    label: hidden
+    settings:
+      use_description_as_link_text: true
+    third_party_settings: {  }
+    type: file_default
+    region: content
+  field_os2web_hearings_reply_name:
+    weight: 0
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_os2web_hearings_reply_org:
+    weight: 1
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    type: string
+    region: content
+  field_os2web_hearings_reply_zip:
+    type: string
+    weight: 3
+    region: content
+    label: above
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+hidden:
+  field_os2web_hearings_reply_cinf: true
+  field_os2web_hearings_reply_conf: true
+  field_os2web_hearings_reply_mail: true
+  langcode: true
+  links: true
+  search_api_excerpt: true
