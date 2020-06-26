@@ -1,8 +1,9 @@
+uuid: fb11e2c2-d3c9-404d-aaff-af238c3ceba8
 langcode: da
 status: true
 dependencies:
   config:
-    - core.entity_view_display.comment.os2web_hearings_hearing_reply.default
+    - core.entity_view_mode.node.teaser
     - field.field.node.os2web_hearings_hearing_case.body
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
@@ -12,64 +13,39 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
     - node.type.os2web_hearings_hearing_case
   module:
-    - comment
-    - datetime
-    - file
     - text
     - user
-id: node.os2web_hearings_hearing_case.default
+id: node.os2web_hearings_hearing_case.teaser
 targetEntityType: node
 bundle: os2web_hearings_hearing_case
-mode: default
+mode: teaser
 content:
   body:
     label: hidden
-    type: text_default
+    type: text_summary_or_trimmed
     weight: 1
-    settings: {  }
+    settings:
+      trim_length: 600
     third_party_settings: {  }
     region: content
-  field_os2web_hearings_attac_doc:
-    weight: 3
+  field_os2web_hearings_type:
+    type: entity_reference_label
+    weight: 0
+    region: content
     label: above
     settings:
-      use_description_as_link_text: true
+      link: true
     third_party_settings: {  }
-    type: file_default
-    region: content
-  field_os2web_hearings_end_date:
-    weight: 2
-    label: hidden
-    settings:
-      format_type: medium
-      timezone_override: ''
-    third_party_settings: {  }
-    type: datetime_default
-    region: content
-  field_os2web_hearings_reply:
-    weight: 4
-    label: hidden
-    settings:
-      view_mode: default
-      pager_id: 0
-    third_party_settings: {  }
-    type: comment_default
-    region: content
-  field_os2web_hearings_subtitle:
-    weight: 0
-    label: hidden
-    settings:
-      link_to_entity: false
-    third_party_settings: {  }
-    type: string
-    region: content
   links:
-    weight: 5
+    weight: 2
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_os2web_hearings_attac_doc: true
+  field_os2web_hearings_end_date: true
+  field_os2web_hearings_reply: true
   field_os2web_hearings_status: true
-  field_os2web_hearings_type: true
+  field_os2web_hearings_subtitle: true
   langcode: true
   search_api_excerpt: true

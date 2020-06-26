@@ -5,3 +5,5 @@ package: OS2Web
 dependencies:
 - drupal:comment
 - drupal:text
+- drupal:views
+- better_exposed_filters

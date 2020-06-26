@@ -22,22 +22,29 @@ content:
   body:
     label: hidden
     type: text_summary_or_trimmed
-    weight: 101
+    weight: 1
     settings:
       trim_length: 600
     third_party_settings: {  }
     region: content
+  field_os2web_hearings_type:
+    type: entity_reference_label
+    weight: 0
+    region: content
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
   links:
-    weight: 100
+    weight: 2
+    region: content
     settings: {  }
     third_party_settings: {  }
-    region: content
 hidden:
   field_os2web_hearings_attac_doc: true
   field_os2web_hearings_end_date: true
   field_os2web_hearings_reply: true
   field_os2web_hearings_status: true
   field_os2web_hearings_subtitle: true
-  field_os2web_hearings_type: true
   langcode: true
   search_api_excerpt: true
