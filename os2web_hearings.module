@@ -4,3 +4,12 @@
  * @file
  * OS2Web Hearings module file.
  */
+
+/**
+ * Implements hook_preprocess_paragraph().
+ *
+ * Adding meeting search form into paragraph.
+ */
+function os2web_hearings_preprocess_paragraph__os2web_hearings_search(&$variables) {
+  $variables['content'] = views_embed_view('os2web_hearings', 'os2web_hearings_embed_search_simple');
+}
