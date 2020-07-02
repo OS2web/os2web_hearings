@@ -1,6 +1,6 @@
 {
   "name": "os2web/os2web_hearings",
-  "description": "Hearing entity",
+  "description": "Adds Hearing related content types and Hearings search view",
   "type": "drupal-module",
   "require": {
     "drupal/core": "*"

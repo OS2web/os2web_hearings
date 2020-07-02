@@ -1,5 +1,6 @@
 name: OS2Web Hearings
 type: module
+description: Adds Hearing related content types and Hearings search view.
 core: 8.x
 package: OS2Web
 dependencies:
