@@ -10,7 +10,7 @@ id: node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
 field_name: field_os2web_hearings_attac_doc
 entity_type: node
 bundle: os2web_hearings_hearing_case
-label: Documents
+label: 'Vedlagte dokumenter'
 description: ''
 required: false
 translatable: false

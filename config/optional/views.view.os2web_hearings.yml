@@ -4,14 +4,14 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - node.type.os2web_hearings_hearing_case
-    - taxonomy.vocabulary.os2web_hearings_status
+    - taxonomy.vocabulary.os2web_hearings_type
   module:
     - better_exposed_filters
     - node
     - taxonomy
     - user
 id: os2web_hearings
-label: Høringer
+label: 'OS2Web hearings'
 module: views
 description: ''
 tag: ''
@@ -56,7 +56,7 @@ display:
               autosubmit: true
               autosubmit_exclude_textfield: false
               autosubmit_textfield_delay: 500
-              autosubmit_hide: false
+              autosubmit_hide: true
               input_required: false
               allow_secondary: false
               secondary_label: 'Avancerede indstillinger'
@@ -221,7 +221,7 @@ display:
           reduce_duplicates: false
           type: select
           limit: true
-          vid: os2web_hearings_status
+          vid: os2web_hearings_type
           hierarchy: false
           error_message: true
           plugin_id: taxonomy_index_tid
@@ -261,23 +261,13 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-  page_1:
-    display_plugin: page
-    id: page_1
-    display_title: Page
-    position: 1
+  os2web_hearings_embed_search_simple:
+    display_plugin: embed
+    id: os2web_hearings_embed_search_simple
+    display_title: Embed
+    position: 2
     display_options:
       display_extenders: {  }
-      path: hoeringer
-      menu:
-        type: none
-        title: 'Høringer og afgørelser'
-        description: ''
-        expanded: false
-        parent: 'menu_link_content:5065fb02-386f-4411-b504-dce4660a7373'
-        weight: -44
-        context: '0'
-        menu_name: main
     cache_metadata:
       max-age: -1
       contexts:
@@ -291,4 +281,3 @@ display:
         - 'user.node_grants:view'
         - user.permissions
       tags: {  }
-

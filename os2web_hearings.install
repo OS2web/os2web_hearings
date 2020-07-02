@@ -1,0 +1,41 @@
+<?php
+
+use Drupal\taxonomy\Entity\Term;
+use Drupal\user\Entity\Role;
+
+/**
+ * Implements hook_install().
+ */
+function os2web_hearings_install() {
+  // Creating OS2Web Hearings Type: "Høringer" and "Afgørelser".
+  Term::create([
+    'vid' => 'os2web_hearings_type',
+    'name' => 'Høringer',
+  ])->save();
+  Term::create([
+    'vid' => 'os2web_hearings_type',
+    'name' => 'Afgørelser',
+  ])->save();
+
+  // Creating OS2Web Hearings status: "I gang" and "Afsluttet".
+  Term::create([
+    'vid' => 'os2web_hearings_status',
+    'name' => 'I gang',
+  ])->save();
+  Term::create([
+    'vid' => 'os2web_hearings_status',
+    'name' => 'Afsluttet',
+  ])->save();
+
+  // Adding comments permissions for anonymous user.
+  $anonym = Role::load('anonymous');
+  $anonym->grantPermission('post comments');
+  $anonym->grantPermission('access comments');
+  $anonym->save();
+
+  // Adding comments permissions for authenticated user.
+  $authenticated = Role::load('authenticated');
+  $authenticated->grantPermission('post comments');
+  $authenticated->grantPermission('access comments');
+  $authenticated->save();
+}

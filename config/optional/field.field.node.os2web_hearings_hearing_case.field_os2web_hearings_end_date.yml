@@ -10,7 +10,7 @@ id: node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
 field_name: field_os2web_hearings_end_date
 entity_type: node
 bundle: os2web_hearings_hearing_case
-label: 'End date'
+label: Frist
 description: ''
 required: false
 translatable: false
