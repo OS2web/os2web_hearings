@@ -4,7 +4,9 @@ description: Adds Hearing related content types and Hearings search view.
 core: 8.x
 package: OS2Web
 dependencies:
-- drupal:comment
-- drupal:text
-- drupal:views
-- better_exposed_filters
+  - drupal:comment
+  - drupal:taxonomy
+  - drupal:text
+  - drupal:views
+  - better_exposed_filters
+  - paragraphs

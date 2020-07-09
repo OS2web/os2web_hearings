@@ -6,6 +6,7 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.body
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_published
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_subtitle
@@ -23,25 +24,41 @@ content:
   body:
     label: hidden
     type: text_summary_or_trimmed
-    weight: 1
+    weight: 3
     settings:
       trim_length: 150
     third_party_settings: {  }
     region: content
   field_os2web_hearings_end_date:
     type: datetime_custom
-    weight: 0
+    weight: 1
     region: content
-    label: above
+    label: inline
     settings:
       timezone_override: ''
       date_format: 'F d'
+    third_party_settings: {  }
+  field_os2web_hearings_published:
+    type: datetime_custom
+    weight: 2
+    region: content
+    label: inline
+    settings:
+      timezone_override: ''
+      date_format: 'Y F d'
+    third_party_settings: {  }
+  field_os2web_hearings_subtitle:
+    type: string
+    weight: 0
+    region: content
+    label: hidden
+    settings:
+      link_to_entity: false
     third_party_settings: {  }
 hidden:
   field_os2web_hearings_attac_doc: true
   field_os2web_hearings_reply: true
   field_os2web_hearings_status: true
-  field_os2web_hearings_subtitle: true
   field_os2web_hearings_type: true
   langcode: true
   links: true

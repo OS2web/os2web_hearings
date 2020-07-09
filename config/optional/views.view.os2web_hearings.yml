@@ -4,9 +4,11 @@ dependencies:
   config:
     - core.entity_view_mode.node.teaser
     - node.type.os2web_hearings_hearing_case
+    - taxonomy.vocabulary.os2web_hearings_status
     - taxonomy.vocabulary.os2web_hearings_type
   module:
     - better_exposed_filters
+    - datetime
     - node
     - taxonomy
     - user
@@ -65,7 +67,7 @@ display:
               plugin_id: default
               advanced:
                 combine: true
-                combine_rewrite: "Sorter efter Asc |Først kommende\r\nSorter efter Desc|Sidst kommende\r\n"
+                combine_rewrite: "Sorter efter Asc |Først kommende\r\nSorter efter Desc|Sidst kommende\r\nOffentliggørelse Desc|Offentliggørelse: nyeste\r\nOffentliggørelse Asc|Offentliggørelse: ældste"
                 reset: false
                 reset_label: ''
                 collapsible: false
@@ -80,6 +82,17 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
+              field_os2web_hearings_status_target_id:
+                plugin_id: bef
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: "I gang|Aktuelle\r\nAfsluttet|Afsluttede"
+                  collapsible: false
+                  is_secondary: false
+                select_all_none: false
+                select_all_none_nested: false
+                display_inline: 1
       pager:
         type: mini
         options:
@@ -198,7 +211,7 @@ display:
             operator_limit_selection: false
             operator_list: {  }
             identifier: field_os2web_hearings_type_target_id
-            required: false
+            required: true
             remember: false
             multiple: false
             remember_roles:
@@ -225,6 +238,53 @@ display:
           hierarchy: false
           error_message: true
           plugin_id: taxonomy_index_tid
+        field_os2web_hearings_status_target_id:
+          id: field_os2web_hearings_status_target_id
+          table: node__field_os2web_hearings_status
+          field: field_os2web_hearings_status_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_os2web_hearings_status_target_id_op
+            label: Status
+            description: ''
+            use_operator: false
+            operator: field_os2web_hearings_status_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_os2web_hearings_status_target_id
+            required: true
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: true
+          type: select
+          limit: true
+          vid: os2web_hearings_status
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
       sorts:
         created:
           id: created
@@ -241,6 +301,19 @@ display:
           entity_type: node
           entity_field: created
           plugin_id: date
+        field_os2web_hearings_published_value:
+          id: field_os2web_hearings_published_value
+          table: node__field_os2web_hearings_published
+          field: field_os2web_hearings_published_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          order: DESC
+          exposed: true
+          expose:
+            label: Offentliggørelse
+          granularity: day
+          plugin_id: datetime
       title: Høringer
       header: {  }
       footer: {  }

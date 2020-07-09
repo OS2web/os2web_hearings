@@ -5,6 +5,14 @@
  * OS2Web Hearings module file.
  */
 
+use \Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use \Drupal\node\Entity\Node;
+use \Drupal\Core\Entity\EntityInterface;
+use \Drupal\Core\Form\FormStateInterface;
+
+define('OS2WEB_HEARINGS_STATUS_ACTIVE_NAME', 'I gang');
+define('OS2WEB_HEARINGS_STATUS_CLOSED_NAME', 'Afsluttet');
+
 /**
  * Implements hook_preprocess_paragraph().
  *
@@ -12,4 +20,123 @@
  */
 function os2web_hearings_preprocess_paragraph__os2web_hearings_search(&$variables) {
   $variables['content'] = views_embed_view('os2web_hearings', 'os2web_hearings_embed_search_simple');
+}
+
+/**
+ * Implements hook_cron().
+ */
+function os2web_hearings_cron() {
+  // Close hearing if end_date is reached.
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'os2web_hearings_status')
+    ->condition('name', OS2WEB_HEARINGS_STATUS_ACTIVE_NAME)
+    ->execute();
+  if (empty($tids)) {
+    \Drupal::logger('os2web_horing')
+      ->error('Term for active hearings status not found');
+    return;
+  }
+  $active_tid = reset($tids);
+
+  // Fetching nodes with active status.
+  $ids = \Drupal::entityQuery('node')
+    ->condition('type', 'os2web_hearings_hearing_case')
+    ->condition('field_os2web_hearings_end_date', date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime('now')), '<')
+    ->condition('field_os2web_hearings_status', $active_tid)
+    ->execute();
+
+  // Fetching nodes with empty status.
+  $ids_empty = \Drupal::entityQuery('node')
+    ->condition('type', 'os2web_hearings_hearing_case')
+    ->condition('field_os2web_hearings_end_date', date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime('now')), '<')
+    ->notExists('field_os2web_hearings_status')
+    ->execute();
+  $ids = array_unique(array_merge($ids, $ids_empty));
+
+  if (empty($ids)) {
+    return;
+  }
+
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'os2web_hearings_status')
+    ->condition('name', OS2WEB_HEARINGS_STATUS_CLOSED_NAME)
+    ->execute();
+  if (empty($tids)) {
+    \Drupal::logger('os2web_horing')
+      ->error('Term for closed hearings status not found');
+    return;
+  }
+  $closed_tid = reset($tids);
+
+  /** @var \Drupal\node\NodeInterface $node */
+  foreach (Node::loadMultiple($ids) as $node) {
+    $node->set('field_os2web_hearings_status', $closed_tid);
+    $node->save();
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_presave().
+ */
+function os2web_hearings_node_presave(EntityInterface $entity) {
+  if ($entity->bundle() != 'os2web_hearings_hearing_case') {
+    return;
+  }
+
+  // Activate hearing when end date is changed.
+  $end_date_value = $entity->field_os2web_hearings_end_date->value;
+  if (is_array($end_date_value)) {
+    $end_date_value = reset($end_date_value);
+  }
+
+  if (empty($end_date_value) ||
+    date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime($end_date_value)) < date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime('now'))) {
+    return;
+  }
+
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'os2web_hearings_status')
+    ->condition('name', OS2WEB_HEARINGS_STATUS_ACTIVE_NAME)
+    ->execute();
+  if (empty($tids)) {
+    \Drupal::logger('os2web_horing')
+      ->error('Can not set correct active status on new hearing');
+    return;
+  }
+  $active_tid = reset($tids);
+  $entity->set('field_os2web_hearings_status', $active_tid);
+
+  if ($entity->status->value && empty($entity->field_os2web_hearings_published->value)) {
+    $entity->set('field_os2web_hearings_published', date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime('now')));
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function os2web_hearings_form_taxonomy_term_os2web_hearings_status_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Status terms names are using as key for changing status.
+  // It shouldn't be possible to change name on term that is used for statuses.
+  /** @var \Drupal\taxonomy\Entity\Term $term */
+  $term = $form_state->getFormObject()->getEntity();
+  if (in_array($term->label(), [OS2WEB_HEARINGS_STATUS_CLOSED_NAME, OS2WEB_HEARINGS_STATUS_ACTIVE_NAME])) {
+    $form['name']['widget'][0]['#disabled'] = TRUE;
+    $form['name']['widget']['description'] = ['#markup' => t('This taxonomy term is used for hearing status field and can not be renamed')];
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function os2web_hearings_form_taxonomy_term_os2web_hearings_status_delete_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  // Status terms names are using as key for changing status.
+  // It shouldn't be possible to delete term that is used for statuses.
+  /** @var \Drupal\taxonomy\Entity\Term $term */
+  $term = $form_state->getFormObject()->getEntity();
+  if (in_array($term->label(), [OS2WEB_HEARINGS_STATUS_CLOSED_NAME, OS2WEB_HEARINGS_STATUS_ACTIVE_NAME])) {
+    $form['description'] = [
+      '#markup' => t('This taxonomy term is used for hearing status field and can not be deleted'),
+    ];
+    $form['#disabled'] = TRUE;
+  }
 }

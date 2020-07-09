@@ -20,11 +20,11 @@ function os2web_hearings_install() {
   // Creating OS2Web Hearings status: "I gang" and "Afsluttet".
   Term::create([
     'vid' => 'os2web_hearings_status',
-    'name' => 'I gang',
+    'name' => OS2WEB_HEARINGS_STATUS_ACTIVE_NAME,
   ])->save();
   Term::create([
     'vid' => 'os2web_hearings_status',
-    'name' => 'Afsluttet',
+    'name' => OS2WEB_HEARINGS_STATUS_CLOSED_NAME,
   ])->save();
 
   // Adding comments permissions for anonymous user.
@@ -38,4 +38,32 @@ function os2web_hearings_install() {
   $authenticated->grantPermission('post comments');
   $authenticated->grantPermission('access comments');
   $authenticated->save();
+}
+
+/**
+ * Implements hook_update_N().
+ *
+ * Activate all hearing without status
+ */
+function os2web_hearings_update_8800() {
+  $ids_empty = \Drupal::entityQuery('node')
+    ->condition('type', 'os2web_hearings_hearing_case')
+    ->notExists('field_os2web_hearings_status')
+    ->execute();
+
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'os2web_hearings_status')
+    ->condition('name', OS2WEB_HEARINGS_STATUS_ACTIVE_NAME)
+    ->execute();
+  if (empty($tids)) {
+    \Drupal::logger('os2web_horing')
+      ->error('Term for active hearings status not found');
+    return;
+  }
+  $active_tid = reset($tids);
+  /** @var \Drupal\node\NodeInterface $node */
+  foreach (\Drupal\node\Entity\Node::loadMultiple($ids_empty) as $node) {
+    $node->set('field_os2web_hearings_status', $active_tid);
+    $node->save();
+  }
 }
