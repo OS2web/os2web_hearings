@@ -140,3 +140,17 @@ function os2web_hearings_form_taxonomy_term_os2web_hearings_status_delete_form_a
     $form['#disabled'] = TRUE;
   }
 }
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Changes the fields position.
+ */
+function os2web_hearings_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if ($form['#id'] == 'views-exposed-form-os2web-hearings-os2web-hearings-embed-search-simple') {
+    // Making sure status fitler is in the bottom.
+    $status_filter = $form['field_os2web_hearings_status_target_id'];
+    unset($form['field_os2web_hearings_status_target_id']);
+    $form['field_os2web_hearings_status_target_id'] = $status_filter;
+  }
+}
