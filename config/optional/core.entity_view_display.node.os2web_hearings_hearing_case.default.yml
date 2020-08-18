@@ -39,22 +39,22 @@ content:
       use_description_as_link_text: true
     third_party_settings: {  }
   field_os2web_hearings_end_date:
-    type: datetime_custom
     weight: 2
-    region: content
-    label: inline
+    label: above
     settings:
       timezone_override: ''
-      date_format: 'F d'
+      format_type: os2core_datetime_medium
     third_party_settings: {  }
+    type: datetime_default
+    region: content
   field_os2web_hearings_published:
     weight: 3
-    label: inline
+    label: above
     settings:
       timezone_override: ''
-      date_format: 'Y F d'
+      format_type: os2core_date_medium
     third_party_settings: {  }
-    type: datetime_custom
+    type: datetime_default
     region: content
   field_os2web_hearings_reply:
     type: comment_default
@@ -77,7 +77,7 @@ content:
     type: entity_reference_label
     weight: 1
     region: content
-    label: inline
+    label: above
     settings:
       link: false
     third_party_settings: {  }

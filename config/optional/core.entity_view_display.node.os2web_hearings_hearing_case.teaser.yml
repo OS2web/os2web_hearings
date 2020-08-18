@@ -36,7 +36,7 @@ content:
     label: inline
     settings:
       timezone_override: ''
-      date_format: 'F d'
+      date_format: 'F d, H:i'
     third_party_settings: {  }
   field_os2web_hearings_published:
     type: datetime_custom

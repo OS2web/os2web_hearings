@@ -1,7 +1,11 @@
 <?php
 
 use Drupal\taxonomy\Entity\Term;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\Component\Utility\NestedArray;
 use Drupal\user\Entity\Role;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Implements hook_install().
@@ -66,4 +70,138 @@ function os2web_hearings_update_8800() {
     $node->set('field_os2web_hearings_status', $active_tid);
     $node->save();
   }
+}
+
+/**
+ * Update Frist field to date and time.
+ */
+function os2web_hearings_update_8801() {
+  $database = \Drupal::database();
+
+  $field_name = 'field_os2web_hearings_end_date';
+  $table = 'node__field_os2web_hearings_end_date';
+  $revision_table = 'node_revision__field_os2web_hearings_end_date';
+  $entity_type = 'node';
+
+  // Step 1: Get field storage.
+  $field_storage = FieldStorageConfig::loadByName($entity_type, $field_name);
+
+  // Check if field not found.
+  if (is_null($field_storage)) {
+    return;
+  }
+
+  // Step 2: Store data.
+  $rows = NULL;
+  $revision_rows = NULL;
+  if ($database->schema()->tableExists($table)) {
+    // The table data to restore after the update is completed.
+    $rows = $database->select($table, 'n')->fields('n')->execute()->fetchAll();
+    $revision_rows = $database->select($revision_table, 'n')->fields('n')->execute()->fetchAll();
+  }
+
+  // Step 3: Save new field configs & delete existing fields.
+  $new_fields = [];
+  foreach ($field_storage->getBundles() as $bundle => $label) {
+    $field = FieldConfig::loadByName($entity_type, $bundle, $field_name);
+    $new_field = $field->toArray();
+    $new_field['field_type'] = 'datetime';
+    $new_fields[] = $new_field;
+    // Delete field.
+    $field->delete();
+    field_purge_field($field);
+  }
+
+  // Step 4: Create new storage configs from existing.
+  $new_field_storage = $field_storage->toArray();
+  $new_field_storage['type'] = 'datetime';
+  $new_field_storage['settings']['datetime_type'] = 'datetime';
+
+  // Step 5: Purge deleted fields data.
+  // This is required to create new fields.
+  field_purge_batch(250);
+
+  // Step 6: Create new fieldstorage.
+  FieldStorageConfig::create($new_field_storage)->save();
+
+  // Step 7: Create new fields for all bundles.
+  foreach ($new_fields as $new_field) {
+    $new_field = FieldConfig::create($new_field);
+    $new_field->save();
+  }
+
+  // Step 8: Restore existing data in fields & revision tables.
+  if (!is_null($rows)) {
+    foreach ($rows as $row) {
+      $row = (array)$row;
+      if (count(explode('T', $row['field_os2web_hearings_end_date_value'])) == 1) {
+        $row['field_os2web_hearings_end_date_value'] .= 'T12:00:00';
+      }
+      $database->insert($table)->fields($row)->execute();
+    }
+  }
+  if (!is_null($revision_rows)) {
+    foreach ($revision_rows as $row) {
+      $row = (array)$row;
+      if (count(explode('T', $row['field_os2web_hearings_end_date_value'])) == 1) {
+        $row['field_os2web_hearings_end_date_value'] .= 'T12:00:00';
+      }
+      $database->insert($revision_table)->fields($row)->execute();
+    }
+  }
+
+  os2web_hearings_update_entity_from_yml('core.entity_form_display.node.os2web_hearings_hearing_case.default', 'entity_form_display', 'node.os2web_hearings_hearing_case.default', [
+    'field_os2web_hearings_end_date' => 'content.field_os2web_hearings_end_date',
+    ]
+  );
+  os2web_hearings_update_entity_from_yml('core.entity_view_display.node.os2web_hearings_hearing_case.default', 'entity_view_display', 'node.os2web_hearings_hearing_case.default', [
+    'field_os2web_hearings_end_date' => 'content.field_os2web_hearings_end_date',
+    ]
+  );
+  os2web_hearings_update_entity_from_yml('core.entity_view_display.node.os2web_hearings_hearing_case.default', 'entity_view_display', 'node.os2web_hearings_hearing_case.teaser', [
+    'field_os2web_hearings_end_date' => 'content.field_os2web_hearings_end_date',
+    ]
+  );
+}
+
+/**
+ * Update entity from yml.
+ *
+ * Some config like form display needs to be updated via config manager.
+ *
+ * @param string $ymlFileName
+ *   Yml file name.
+ * @param string $entityType
+ *   The entity type for this storage.
+ * @param mixed $id
+ *   The ID of the entity to load.
+ * @param array $setComponents
+ *   Array of components you want to add.
+ *   - The key will be what we are setting.
+ *   - The value is the key that will be used from the new config file
+ *     (Can have in string for array).
+ *
+ * @throws
+ */
+function os2web_hearings_update_entity_from_yml($ymlFileName, $entityType, $id, array $setComponents)
+{
+  $yml = Yaml::parse(file_get_contents(drupal_get_path('module', 'os2web_hearings') . '/config/optional/' . $ymlFileName . '.yml'));
+
+  $entity = \Drupal::entityTypeManager()->getStorage($entityType)->load($id);
+  foreach ($setComponents as $key => $value) {
+    $parts = explode('.', $value);
+    if (count($parts) == 1) {
+      $entity->setComponent($key, $yml[$value]);
+    }
+    else {
+      $value = NestedArray::getValue($yml, $parts);
+      if (empty($value)) {
+        \Drupal::service('messenger')->addWarning('Component ' . $key . ' has empty configuration');
+        continue;
+      }
+      $entity->setComponent($key, $value);
+    }
+  }
+
+  $entity->save();
 }

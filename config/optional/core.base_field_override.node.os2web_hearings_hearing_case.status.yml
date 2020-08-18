@@ -1,4 +1,4 @@
-langcode: en
+langcode: da
 status: true
 dependencies:
   config:
@@ -7,15 +7,15 @@ id: node.os2web_hearings_hearing_case.status
 field_name: status
 entity_type: node
 bundle: os2web_hearings_hearing_case
-label: Published
+label: Udgivet
 description: ''
 required: false
-translatable: true
+translatable: false
 default_value:
   -
     value: 0
 default_value_callback: ''
 settings:
-  on_label: 'On'
-  off_label: 'Off'
+  on_label: Tilsluttet
+  off_label: Afbrudt
 field_type: boolean
