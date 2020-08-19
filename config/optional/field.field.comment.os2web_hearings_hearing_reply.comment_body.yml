@@ -10,7 +10,7 @@ id: comment.os2web_hearings_hearing_reply.comment_body
 field_name: comment_body
 entity_type: comment
 bundle: os2web_hearings_hearing_reply
-label: 'Skriv svar'
+label: 'Dit svar'
 description: ''
 required: true
 translatable: false

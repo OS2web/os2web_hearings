@@ -8,7 +8,7 @@ id: comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_mail
 field_name: field_os2web_hearings_reply_mail
 entity_type: comment
 bundle: os2web_hearings_hearing_reply
-label: Email
+label: 'E-mail adresse'
 description: ''
 required: true
 translatable: false
