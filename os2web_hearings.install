@@ -205,3 +205,40 @@ function os2web_hearings_update_entity_from_yml($ymlFileName, $entityType, $id, 
 
   $entity->save();
 }
+
+/**
+ * Add new fields to hearings node type: Email notification, SBSYS case number.
+ */
+function os2web_hearings_update_8802() {
+  $fields = [
+    'field_os2web_hearings_not_email',
+    'field_os2web_hearings_sbsys_case',
+  ];
+  $entity_type = 'node';
+  $entity_bundle = 'os2web_hearings_hearing_case';
+  $path = drupal_get_path('module', 'os2web_hearings');
+
+  foreach ($fields as $field_name) {
+    // Create field storage.
+    $field_storage_yml = Yaml::parse(file_get_contents($path . '/config/optional/field.storage.' . $entity_type . '.' . $field_name . '.yml'));
+    if (!FieldStorageConfig::loadByName($entity_type, $field_name)) {
+      FieldStorageConfig::create($field_storage_yml)->save();
+    }
+    // Create field instance.
+    $field_instance_yml = Yaml::parse(file_get_contents($path . '/config/optional/field.field.' . $entity_type . '.' . $entity_bundle . '.' . $field_name . '.yml'));
+    if (!FieldConfig::loadByName($entity_type, $entity_bundle, $field_name)) {
+      FieldConfig::create($field_instance_yml)->save();
+    }
+
+    // Applying form/view_display settings based on config in yml files.
+    $components = [
+      $field_name => 'content.' . $field_name,
+      'hidden' => 'hidden',
+    ];
+    $yaml_id = $entity_type . '.' . $entity_bundle . '.default';
+    os2web_hearings_update_entity_from_yml('core.entity_form_display.' . $yaml_id, 'entity_form_display', $yaml_id, $components);
+    os2web_hearings_update_entity_from_yml('core.entity_view_display.' . $yaml_id, 'entity_view_display', $yaml_id, $components);
+    $yaml_id = $entity_type . '.' . $entity_bundle . '.teaser';
+    os2web_hearings_update_entity_from_yml('core.entity_view_display.' . $yaml_id, 'entity_view_display', $yaml_id, $components);
+  }
+}

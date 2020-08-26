@@ -6,8 +6,10 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.body
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_not_email
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_published
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_subtitle
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
@@ -87,6 +89,8 @@ content:
     settings: {  }
     third_party_settings: {  }
 hidden:
+  field_os2web_hearings_not_email: true
+  field_os2web_hearings_sbsys_case: true
   field_os2web_hearings_status: true
   langcode: true
   search_api_excerpt: true
