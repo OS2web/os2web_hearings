@@ -5,10 +5,13 @@
  * OS2Web Hearings module file.
  */
 
-use \Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
-use \Drupal\node\Entity\Node;
-use \Drupal\Core\Entity\EntityInterface;
-use \Drupal\Core\Form\FormStateInterface;
+use Drupal\comment\Entity\Comment;
+use Drupal\Component\Utility\Mail as MailHelper;
+use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\node\Entity\Node;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 define('OS2WEB_HEARINGS_STATUS_ACTIVE_NAME', 'I gang');
 define('OS2WEB_HEARINGS_STATUS_CLOSED_NAME', 'Afsluttet');
@@ -72,6 +75,7 @@ function os2web_hearings_cron() {
   foreach (Node::loadMultiple($ids) as $node) {
     $node->set('field_os2web_hearings_status', $closed_tid);
     $node->save();
+    _os2web_hearings_send_email_notification($node);
   }
 }
 
@@ -109,6 +113,35 @@ function os2web_hearings_node_presave(EntityInterface $entity) {
   if ($entity->status->value && empty($entity->field_os2web_hearings_published->value)) {
     $entity->set('field_os2web_hearings_published', date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime('now')));
   }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function os2web_hearings_theme() {
+  return [
+    'hearings_og_afgeorelse_case__mail' => [
+      'variables' => [
+        'node' => NULL,
+        'comments' => NULL,
+      ],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_mail().
+ *
+ * Captures the outgoing mail and sets appropriate message body and headers.
+ */
+function os2web_hearings_mail($key, &$message, $params) {
+  if (isset($params['headers'])) {
+    $message['headers'] = array_merge($message['headers'], $params['headers']);
+  }
+
+  $message['from'] = $params['from'];
+  $message['subject'] = $params['subject'];
+  $message['body'][] = $params['body'];
 }
 
 /**
@@ -184,4 +217,64 @@ function _os2web_hearings_remove_textarea_help(array $form_element, FormStateInt
   }
 
   return $form_element;
+}
+
+function _os2web_hearings_send_email_notification($node) {
+  $type = t('Høringe elle Afgørelse');
+  if (!empty($node->field_os2web_hearings_type) && $node->field_os2web_hearings_type instanceof EntityReferenceFieldItemListInterface) {
+    $type_value = $node->field_os2web_hearings_type->referencedEntities();
+    $type = $type_value[0]->label();
+  }
+
+  $site_config = \Drupal::service('config.factory')->get('system.site');
+  $renderer = \Drupal::service('renderer');
+  $params = [
+    'headers' => [
+      'Content-Type' => 'text/html; charset=UTF-8;',
+      'Content-Transfer-Encoding' => '8Bit',
+    ],
+    'from' => MailHelper::formatDisplayName($site_config->get('name')) . ' <' . $site_config->get('mail') . '>',
+    'subject' => t('@type #@nid', [
+      '@nid' => $node->id(),
+      '@type' => $type,
+    ]),
+  ];
+
+  $comments_field_value = $node->field_os2web_hearings_reply;
+  $comments = [];
+  if (!empty($comments_field_value)) {
+    foreach ($comments_field_value as $comment_value) {
+      $comments[] = Comment::load($comment_value->cid);
+    }
+  }
+  $build = [
+    '#theme' => 'hearings_og_afgeorelse_case__mail',
+    '#node' => $node,
+    '#comments' => $comments,
+  ];
+  $params['body'] = $renderer->renderRoot($build);
+
+  if (!empty($node->field_os2web_hearings_attac_doc)) {
+    foreach ($node->field_os2web_hearings_attac_doc->referencedEntities() as $file) {
+      if (!file_exists($file->getFileUri())) {
+        continue;
+      }
+      $file = (object) [
+        'filename' => $file->getFilename(),
+        'uri' => $file->getFileUri(),
+        'filemime' => $file->getMimeType(),
+      ];
+      $params['files'][] = $file;
+    }
+  }
+  $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
+  if ($node->field_os2web_hearings_not_email->isEmpty()) {
+    \Drupal::logger('os2web_hearings')->warning(t('Notification email is empty. Can not send email notification for os2web_hearings_hearing_case with id @nid.', ['@nid' => $node->id()]));
+    return;
+  }
+  $mailto = $node->field_os2web_hearings_not_email->first()->value;
+  $mail_manager = \Drupal::service('plugin.manager.mail');
+  if (!$mail_manager->mail('os2web_hearings', 'default', $mailto, $langcode, $params)) {
+    \Drupal::logger('os2web_hearings')->error(t('Sending of email notification for os2web_hearings_hearing_case with id @nid failed.', ['@nid' => $node->id()]));
+  }
 }

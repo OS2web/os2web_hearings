@@ -1,0 +1,70 @@
+<h2>{{ node.getTitle }}</h2>
+{% if node.field_os2web_hearings_subtitle.value %}
+    <p>
+        <strong>{{ node.field_os2web_hearings_subtitle.fieldDefinition.label }}:</strong><br />
+        {{ node.field_os2web_hearings_subtitle.value }}
+    </p>
+{% endif %}
+<p>
+    <strong>{{ node.field_os2web_hearings_type.fieldDefinition.label }}:</strong><br />
+    {{ node.field_os2web_hearings_type.entity.label }}
+</p>
+<p>
+    <strong>{{ node.field_os2web_hearings_status.fieldDefinition.label }}:</strong><br />
+    {{ node.field_os2web_hearings_status.entity.label }}
+</p>
+<p>
+    <strong>{{ node.field_os2web_hearings_end_date.fieldDefinition.label }}:</strong><br />
+    {{ node.field_os2web_hearings_end_date.value }}
+</p>
+<p>
+    <strong>{{ node.field_os2web_hearings_published.fieldDefinition.label }}:</strong><br />
+    {{ node.field_os2web_hearings_published.value }}
+</p>
+{% if node.body.value is not empty %}
+    {% set body = {
+        '#type':   'processed_text',
+        '#text':    node.body.value,
+        '#format':  node.body.format,
+    } %}
+    <div>
+        <div><strong>{{ node.body.fieldDefinition.label }}:</strong></div>
+        <div>{{ body }}</div>
+    </div>
+{% endif %}
+
+{% if node.field_os2web_hearings_sbsys_case.value is not empty %}
+    <p>
+        <strong>{{ node.field_os2web_hearings_sbsys_case.fieldDefinition.label }}:</strong><br />
+        {{ node.field_os2web_hearings_sbsys_case.value }}
+    </p>
+{% endif %}
+
+{% if node.field_os2web_hearings_attac_doc.value is not empty %}
+    <p>
+        <strong>{{ node.field_os2web_hearings_attac_doc.fieldDefinition.label }}:</strong><br />
+        {% for file in node.field_os2web_hearings_attac_doc %}
+            - {{ file.entity.getFilename() }}<br/>
+        {% endfor %}
+    </p>
+{% endif %}
+
+{% if comments is not empty %}
+    <h3>{{ node.field_os2web_hearings_reply.fieldDefinition.label }}</h3>
+    {% for comment in comments %}
+        <ul>
+            <li>
+                <div>
+                    <strong>{{ comment.field_os2web_hearings_reply_name.value }} - {{ comment.created.value | format_date('os2core_date_medium') }}:</strong>
+                </div>
+                {% set body = {
+                    '#type':   'processed_text',
+                    '#text':    comment.comment_body.value,
+                    '#format':  comment.comment_body.format,
+                } %}
+                <div>{{ body }}</div>
+            </li>
+
+        </ul>
+    {% endfor %}
+{% endif %}

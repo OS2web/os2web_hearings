@@ -10,3 +10,4 @@ dependencies:
   - drupal:views
   - better_exposed_filters
   - paragraphs
+  - swiftmailer
