@@ -278,3 +278,22 @@ function _os2web_hearings_send_email_notification($node) {
     \Drupal::logger('os2web_hearings')->error(t('Sending of email notification for os2web_hearings_hearing_case with id @nid failed.', ['@nid' => $node->id()]));
   }
 }
+
+/**
+ * Implements hook_preprocess_node().
+ */
+function os2web_hearings_preprocess_node(&$variables) {
+  if ($variables['node']->getType() == 'os2web_hearings_hearing_case') {
+    $hearing = $variables['node'];
+
+    /** @var \Drupal\Core\Datetime\DrupalDateTime $endDate */
+    $endDate = $hearing->field_os2web_hearings_end_date->date;
+
+    if ($endDate->getTimestamp() < time()) {
+      $variables['content']['#closed'] = TRUE;
+    }
+    else {
+      $variables['content']['#closed'] = FALSE;
+    }
+  }
+}
