@@ -7,6 +7,7 @@
 
 use Drupal\comment\Entity\Comment;
 use Drupal\Component\Utility\Mail as MailHelper;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\Entity\Node;
@@ -44,17 +45,20 @@ function os2web_hearings_cron() {
   }
   $active_tid = reset($tids);
 
+  $now = new DrupalDateTime('now');
+  $now->setTimezone(new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE));
+
   // Fetching nodes with active status.
   $ids = \Drupal::entityQuery('node')
     ->condition('type', 'os2web_hearings_hearing_case')
-    ->condition('field_os2web_hearings_end_date', date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime('now')), '<')
+    ->condition('field_os2web_hearings_end_date', $now->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT), '<')
     ->condition('field_os2web_hearings_status', $active_tid)
     ->execute();
 
   // Fetching nodes with empty status.
   $ids_empty = \Drupal::entityQuery('node')
     ->condition('type', 'os2web_hearings_hearing_case')
-    ->condition('field_os2web_hearings_end_date', date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime('now')), '<')
+    ->condition('field_os2web_hearings_end_date', $now->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT), '<')
     ->notExists('field_os2web_hearings_status')
     ->execute();
   $ids = array_unique(array_merge($ids, $ids_empty));
@@ -90,14 +94,11 @@ function os2web_hearings_node_presave(EntityInterface $entity) {
     return;
   }
 
-  // Activate hearing when end date is changed.
-  $end_date_value = $entity->field_os2web_hearings_end_date->value;
-  if (is_array($end_date_value)) {
-    $end_date_value = reset($end_date_value);
-  }
+  /** @var Drupal\Core\Datetime\DrupalDateTime $endDate */
+  $endDate = $entity->field_os2web_hearings_end_date->date;
 
-  if (empty($end_date_value) ||
-    date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime($end_date_value)) < date(DateTimeItemInterface::DATE_STORAGE_FORMAT, strtotime('now'))) {
+  // Activate hearing when end date is changed.
+  if (empty($endDate) || $endDate->getTimestamp() < time()) {
     return;
   }
 

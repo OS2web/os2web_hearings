@@ -14,11 +14,11 @@ function os2web_hearings_install() {
   // Creating OS2Web Hearings Type: "Høringer" and "Afgørelser".
   Term::create([
     'vid' => 'os2web_hearings_type',
-    'name' => 'Høringe',
+    'name' => OS2WEB_HEARINGS_TYPE_HEARINGS,
   ])->save();
   Term::create([
     'vid' => 'os2web_hearings_type',
-    'name' => 'Afgørelse',
+    'name' => OS2WEB_HEARINGS_TYPE_DECISIONS,
   ])->save();
 
   // Creating OS2Web Hearings status: "I gang" and "Afsluttet".
