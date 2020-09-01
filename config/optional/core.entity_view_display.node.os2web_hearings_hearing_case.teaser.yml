@@ -6,12 +6,13 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.body
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_heading
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_intro
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_not_email
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_published
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
-    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_subtitle
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
     - node.type.os2web_hearings_hearing_case
   module:
@@ -26,19 +27,26 @@ content:
   body:
     label: hidden
     type: text_summary_or_trimmed
-    weight: 3
+    weight: 4
     settings:
       trim_length: 150
     third_party_settings: {  }
     region: content
   field_os2web_hearings_end_date:
-    type: datetime_custom
-    weight: 1
-    region: content
-    label: inline
+    weight: 3
+    label: above
     settings:
       timezone_override: ''
-      date_format: 'F d, H:i'
+      format_type: os2core_datetime_medium
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_os2web_hearings_heading:
+    type: basic_string
+    weight: 0
+    region: content
+    label: hidden
+    settings: {  }
     third_party_settings: {  }
   field_os2web_hearings_published:
     type: datetime_custom
@@ -49,16 +57,23 @@ content:
       timezone_override: ''
       date_format: 'Y F d'
     third_party_settings: {  }
-  field_os2web_hearings_subtitle:
-    type: string
-    weight: 0
-    region: content
-    label: hidden
-    settings:
-      link_to_entity: false
+  hidden:
+    field_os2web_hearings_attac_doc: true
+    field_os2web_hearings_not_email: true
+    field_os2web_hearings_reply: true
+    field_os2web_hearings_sbsys_case: true
+    field_os2web_hearings_status: true
+    field_os2web_hearings_type: true
+    langcode: true
+    links: true
+    search_api_excerpt: true
+    weight: 5
+    settings: {  }
     third_party_settings: {  }
+    region: content
 hidden:
   field_os2web_hearings_attac_doc: true
+  field_os2web_hearings_intro: true
   field_os2web_hearings_not_email: true
   field_os2web_hearings_reply: true
   field_os2web_hearings_sbsys_case: true

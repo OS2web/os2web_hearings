@@ -3,13 +3,11 @@ status: true
 dependencies:
   module:
     - node
-id: node.field_os2web_hearings_subtitle
-field_name: field_os2web_hearings_subtitle
+id: node.field_os2web_hearings_intro
+field_name: field_os2web_hearings_intro
 entity_type: node
-type: string
+type: string_long
 settings:
-  max_length: 255
-  is_ascii: false
   case_sensitive: false
 module: core
 locked: false

@@ -5,12 +5,13 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.body
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_heading
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_intro
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_not_email
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_published
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
-    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_subtitle
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
     - node.type.os2web_hearings_hearing_case
   module:
@@ -27,7 +28,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 4
+    weight: 6
     settings:
       rows: 9
       summary_rows: 3
@@ -37,25 +38,41 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 5
+    weight: 7
     region: content
     settings: {  }
     third_party_settings: {  }
   field_os2web_hearings_attac_doc:
-    weight: 8
+    weight: 10
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
     region: content
   field_os2web_hearings_end_date:
-    weight: 3
+    weight: 5
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
     region: content
+  field_os2web_hearings_heading:
+    weight: 2
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
+  field_os2web_hearings_intro:
+    weight: 3
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+    type: string_textarea
+    region: content
   field_os2web_hearings_not_email:
-    weight: 9
+    weight: 11
     settings:
       size: 60
       placeholder: ''
@@ -63,15 +80,7 @@ content:
     type: email_default
     region: content
   field_os2web_hearings_sbsys_case:
-    weight: 10
-    settings:
-      size: 60
-      placeholder: ''
-    third_party_settings: {  }
-    type: string_textfield
-    region: content
-  field_os2web_hearings_subtitle:
-    weight: 1
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -79,27 +88,35 @@ content:
     type: string_textfield
     region: content
   field_os2web_hearings_type:
-    weight: 2
+    weight: 1
     settings: {  }
     third_party_settings: {  }
     type: options_select
     region: content
+  hidden:
+    field_os2web_hearings_published: true
+    field_os2web_hearings_reply: true
+    field_os2web_hearings_status: true
+    weight: 27
+    settings: {  }
+    third_party_settings: {  }
+    region: content
   langcode:
     type: language_select
-    weight: 14
+    weight: 16
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 15
+    weight: 17
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 13
+    weight: 15
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -107,23 +124,23 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 7
+    weight: 8
     region: content
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 12
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_state:
     type: options_select
-    weight: 20
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 18
+    weight: 20
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -131,14 +148,14 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 17
+    weight: 19
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 6
+    weight: 9
     region: content
     third_party_settings: {  }
   title:
@@ -151,7 +168,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 16
+    weight: 18
     settings:
       match_operator: CONTAINS
       size: 60
@@ -161,18 +178,18 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 11
+    weight: 12
     region: content
     settings: {  }
     third_party_settings: {  }
   unpublish_state:
     type: options_select
-    weight: 19
+    weight: 21
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 21
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
