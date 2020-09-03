@@ -12,6 +12,7 @@ dependencies:
     - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_mail
     - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_name
     - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_org
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_secr
     - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_zip
   module:
     - file
@@ -51,6 +52,7 @@ hidden:
   field_os2web_hearings_reply_city: true
   field_os2web_hearings_reply_mail: true
   field_os2web_hearings_reply_org: true
+  field_os2web_hearings_reply_secr: true
   field_os2web_hearings_reply_zip: true
   langcode: true
   links: true

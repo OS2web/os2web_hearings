@@ -8,7 +8,7 @@ id: comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_cinf
 field_name: field_os2web_hearings_reply_cinf
 entity_type: comment
 bundle: os2web_hearings_hearing_reply
-label: 'Anden kontakt information'
+label: 'Anden kontaktinformation'
 description: ''
 required: false
 translatable: false

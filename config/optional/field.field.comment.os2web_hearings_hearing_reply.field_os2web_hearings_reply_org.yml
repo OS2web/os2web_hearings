@@ -9,7 +9,7 @@ field_name: field_os2web_hearings_reply_org
 entity_type: comment
 bundle: os2web_hearings_hearing_reply
 label: 'Virksomhed eller organisation'
-description: Offentliggøres
+description: ''
 required: false
 translatable: false
 default_value: {  }

@@ -8,8 +8,8 @@ id: comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_zip
 field_name: field_os2web_hearings_reply_zip
 entity_type: comment
 bundle: os2web_hearings_hearing_reply
-label: 'Post nummer'
-description: Offentliggøres
+label: Postnummer
+description: 'Offentliggøres ved politisk behandling'
 required: true
 translatable: false
 default_value: {  }
