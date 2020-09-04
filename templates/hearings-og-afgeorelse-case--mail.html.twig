@@ -63,8 +63,17 @@
                     '#format':  comment.comment_body.format,
                 } %}
                 <div>{{ body }}</div>
+                <div>
+                    {% if comment.field_os2web_hearings_reply_docs.value is not empty %}
+                        <p>
+                            <strong>{{ comment.field_os2web_hearings_reply_docs.fieldDefinition.label }}:</strong><br />
+                            {% for file in comment.field_os2web_hearings_reply_docs %}
+                                - {{ file.entity.getFilename() }}<br/>
+                            {% endfor %}
+                        </p>
+                    {% endif %}
+                </div>
             </li>
-
         </ul>
     {% endfor %}
 {% endif %}

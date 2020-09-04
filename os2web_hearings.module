@@ -5,6 +5,7 @@
  * OS2Web Hearings module file.
  */
 
+use Drupal\comment\CommentManagerInterface;
 use Drupal\comment\Entity\Comment;
 use Drupal\Component\Utility\Mail as MailHelper;
 use Drupal\Core\Datetime\DrupalDateTime;
@@ -251,8 +252,7 @@ function _os2web_hearings_send_email_notification($node) {
     ]),
   ];
 
-  $comments_field_value = $node->field_os2web_hearings_reply;
-  $comments = [];
+  $comments = \Drupal::service('entity_type.manager')->getStorage('comment')->loadThread($node, 'field_os2web_hearings_reply', \Drupal\comment\CommentManagerInterface::COMMENT_MODE_FLAT);;
   if (!empty($comments_field_value)) {
     foreach ($comments_field_value as $comment_value) {
       $comments[] = Comment::load($comment_value->cid);
@@ -277,7 +277,25 @@ function _os2web_hearings_send_email_notification($node) {
       ];
       $params['files'][] = $file;
     }
+
+    foreach ($comments as $comment) {
+      if (empty($comment->field_os2web_hearings_reply_docs)) {
+        continue;
+      }
+      foreach ($comment->field_os2web_hearings_reply_docs->referencedEntities() as $file) {
+        if (!file_exists($file->getFileUri())) {
+          continue;
+        }
+        $file = (object) [
+          'filename' => $file->getFilename(),
+          'uri' => $file->getFileUri(),
+          'filemime' => $file->getMimeType(),
+        ];
+        $params['files'][] = $file;
+      }
+    }
   }
+
   $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
   if ($node->field_os2web_hearings_not_email->isEmpty()) {
     \Drupal::logger('os2web_hearings')->warning(t('Notification email is empty. Can not send email notification for os2web_hearings_hearing_case with id @nid.', ['@nid' => $node->id()]));
