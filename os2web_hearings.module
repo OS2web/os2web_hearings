@@ -252,7 +252,7 @@ function _os2web_hearings_send_email_notification($node) {
     ]),
   ];
 
-  $comments = \Drupal::service('entity_type.manager')->getStorage('comment')->loadThread($node, 'field_os2web_hearings_reply', \Drupal\comment\CommentManagerInterface::COMMENT_MODE_FLAT);;
+  $comments = \Drupal::service('entity_type.manager')->getStorage('comment')->loadThread($node, 'field_os2web_hearings_reply', CommentManagerInterface::COMMENT_MODE_FLAT);
   if (!empty($comments_field_value)) {
     foreach ($comments_field_value as $comment_value) {
       $comments[] = Comment::load($comment_value->cid);
@@ -294,6 +294,20 @@ function _os2web_hearings_send_email_notification($node) {
         $params['files'][] = $file;
       }
     }
+  }
+
+  /** @var \Drupal\os2web_hearings\SbsysGenerator $sbsys_generator */
+  $sbsys_generator = \Drupal::service('os2web_hearings.sbsys_generator');
+  $xmlFileUri = $sbsys_generator->generateFile('os2formsFormular', $node, $params['body']->__toString());
+
+  // Attaching SBSYS XML.
+  if ($xmlFileUri) {
+    $xmlFile = (object) [
+      'filename' => 'sbsys.xml',
+      'uri' => $xmlFileUri,
+      'filemime' => 'application/xml',
+    ];
+    $params['files'][] = $xmlFile;
   }
 
   $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();

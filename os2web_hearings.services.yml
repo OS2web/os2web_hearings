@@ -1,0 +1,4 @@
+services:
+  os2web_hearings.sbsys_generator:
+    class: Drupal\os2web_hearings\SbsysGenerator
+    arguments: []
