@@ -41,8 +41,9 @@ script:
   - phpcs --standard=Drupal --ignore=*.md ./
   - twigcs $OS2WEB_PATH
   - cd $DRUPAL_ROOT/core
-  - eslint $DRUPAL_ROOT/modules/contrib/os2web_hearings
-  - stylelint --aei $DRUPAL_ROOT/modules/contrib/os2web_hearings/**/*.css
-  - drupal-check $DRUPAL_ROOT/profiles
+  - MODULE_ROOT=$DRUPAL_ROOT/modules/contrib/os2web_hearings
+  - eslint $MODULE_ROOT
+  - stylelint --aei $MODULE_ROOT/**/*.css
+  - drupal-check $MODULE_ROOT
   - cd $DRUPAL_ROOT
   - drush si standard --db-url=mysql://root:@127.0.0.1/drupal --yes

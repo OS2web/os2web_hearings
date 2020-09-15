@@ -3,7 +3,6 @@
 namespace Drupal\os2web_hearings;
 
 use Drupal\node\NodeInterface;
-use XMLWriter;
 
 /**
  * Class generates xml string from array.
@@ -58,7 +57,7 @@ class SbsysGenerator {
    *   Create File URI or FALSE on error.
    */
   public function generateFile($root, NodeInterface $hearing, $renderedText) {
-    $this->xmlWriter = new XMLWriter();
+    $this->xmlWriter = new \XMLWriter();
 
     $this->xmlWriter->openMemory();
     $this->xmlWriter->startDocument($this->ver, $this->charset);
@@ -87,7 +86,7 @@ class SbsysGenerator {
    * @param array|object $data
    *   Data to append to current writer.
    */
-  protected function write(XMLWriter $xml, $data) {
+  protected function write(\XMLWriter $xml, $data) {
     foreach ($data as $key => $value) {
       if (is_int($key) && (is_array($value) || is_object($value))) {
         $xml->startElement('item');

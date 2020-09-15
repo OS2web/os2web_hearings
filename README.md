@@ -1,4 +1,4 @@
-# OS2Web Hearings Drupal module  [![Build Status](https://travis-ci.org/OS2web/os2web_hearings.svg?branch=master)](https://travis-ci.org/OS2web/os2web_kle)
+# OS2Web Hearings Drupal module  [![Build Status](https://travis-ci.org/OS2web/os2web_hearings.svg?branch=master)](https://travis-ci.org/OS2web/os2web_hearings)
 
 ## Module purpose
 
