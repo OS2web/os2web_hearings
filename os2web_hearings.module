@@ -6,7 +6,6 @@
  */
 
 use Drupal\comment\CommentManagerInterface;
-use Drupal\comment\Entity\Comment;
 use Drupal\Component\Utility\Mail as MailHelper;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
@@ -128,7 +127,9 @@ function os2web_hearings_theme() {
     'hearings_og_afgeorelse_case__mail' => [
       'variables' => [
         'node' => NULL,
+        'attachments' => NULL,
         'comments' => NULL,
+        'comments_files' => NULL,
       ],
     ],
   ];
@@ -252,49 +253,61 @@ function _os2web_hearings_send_email_notification($node) {
     ]),
   ];
 
-  $comments = \Drupal::service('entity_type.manager')->getStorage('comment')->loadThread($node, 'field_os2web_hearings_reply', CommentManagerInterface::COMMENT_MODE_FLAT);
-  if (!empty($comments_field_value)) {
-    foreach ($comments_field_value as $comment_value) {
-      $comments[] = Comment::load($comment_value->cid);
-    }
-  }
-  $build = [
-    '#theme' => 'hearings_og_afgeorelse_case__mail',
-    '#node' => $node,
-    '#comments' => $comments,
-  ];
-  $params['body'] = $renderer->renderRoot($build);
-
+  // Gathering hearing attachments.
+  $hearing_attachments = [];
   if (!empty($node->field_os2web_hearings_attac_doc)) {
     foreach ($node->field_os2web_hearings_attac_doc->referencedEntities() as $file) {
       if (!file_exists($file->getFileUri())) {
         continue;
       }
-      $file = (object) [
+      $params['files'][] = (object) [
         'filename' => $file->getFilename(),
         'uri' => $file->getFileUri(),
         'filemime' => $file->getMimeType(),
       ];
-      $params['files'][] = $file;
-    }
 
-    foreach ($comments as $comment) {
-      if (empty($comment->field_os2web_hearings_reply_docs)) {
-        continue;
-      }
-      foreach ($comment->field_os2web_hearings_reply_docs->referencedEntities() as $file) {
-        if (!file_exists($file->getFileUri())) {
-          continue;
-        }
-        $file = (object) [
-          'filename' => $file->getFilename(),
-          'uri' => $file->getFileUri(),
-          'filemime' => $file->getMimeType(),
-        ];
-        $params['files'][] = $file;
-      }
+      $hearing_attachments[] = [
+        'name' => $file->getFilename(),
+        'url' => $file->url(),
+      ];
     }
   }
+
+  // Gathering comments.
+  $comments = \Drupal::service('entity_type.manager')->getStorage('comment')->loadThread($node, 'field_os2web_hearings_reply', CommentManagerInterface::COMMENT_MODE_FLAT);
+
+  // Gathering comments files.
+  $comments_files = [];
+  foreach ($comments as $comment) {
+    if (empty($comment->field_os2web_hearings_reply_docs)) {
+      continue;
+    }
+    foreach ($comment->field_os2web_hearings_reply_docs->referencedEntities() as $file) {
+      if (!file_exists($file->getFileUri())) {
+        continue;
+      }
+      $params['files'][] = (object) [
+        'filename' => $file->getFilename(),
+        'uri' => $file->getFileUri(),
+        'filemime' => $file->getMimeType(),
+      ];
+
+      $comments_files[$comment->id()][] = [
+        'name' => $file->getFilename(),
+        'url' => $file->url(),
+      ];
+    }
+  }
+
+  // Creating theme build array.
+  $build = [
+    '#theme' => 'hearings_og_afgeorelse_case__mail',
+    '#node' => $node,
+    '#attachments' => $hearing_attachments,
+    '#comments' => $comments,
+    '#comments_files' => $comments_files,
+  ];
+  $params['body'] = $renderer->renderRoot($build);
 
   /** @var \Drupal\os2web_hearings\SbsysGenerator $sbsys_generator */
   $sbsys_generator = \Drupal::service('os2web_hearings.sbsys_generator');

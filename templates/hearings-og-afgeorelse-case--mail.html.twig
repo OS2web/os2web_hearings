@@ -1,4 +1,4 @@
-<h2>{{ node.getTitle }}</h2>
+<h1>{{ node.getTitle }}</h1>
 {% if node.field_os2web_hearings_heading.value %}
     <p>
         <strong>{{ node.field_os2web_hearings_heading.fieldDefinition.label }}:</strong><br />
@@ -43,37 +43,35 @@
 {% if node.field_os2web_hearings_attac_doc.value is not empty %}
     <p>
         <strong>{{ node.field_os2web_hearings_attac_doc.fieldDefinition.label }}:</strong><br />
-        {% for file in node.field_os2web_hearings_attac_doc %}
-            - {{ file.entity.getFilename() }}<br/>
+        {% for file in attachments %}
+          - <a href="{{ file.url }}">{{ file.name }}</a><br/>
         {% endfor %}
     </p>
 {% endif %}
 
 {% if comments is not empty %}
-    <h3>{{ node.field_os2web_hearings_reply.fieldDefinition.label }}</h3>
+    <h2>{{ node.field_os2web_hearings_reply.fieldDefinition.label }}</h2>
     {% for comment in comments %}
-        <ul>
-            <li>
-                <div>
-                    <strong>{{ comment.field_os2web_hearings_reply_name.value }} - {{ comment.created.value | format_date('os2core_date_medium') }}:</strong>
-                </div>
-                {% set body = {
-                    '#type':   'processed_text',
-                    '#text':    comment.comment_body.value,
-                    '#format':  comment.comment_body.format,
-                } %}
-                <div>{{ body }}</div>
-                <div>
-                    {% if comment.field_os2web_hearings_reply_docs.value is not empty %}
-                        <p>
-                            <strong>{{ comment.field_os2web_hearings_reply_docs.fieldDefinition.label }}:</strong><br />
-                            {% for file in comment.field_os2web_hearings_reply_docs %}
-                                - {{ file.entity.getFilename() }}<br/>
-                            {% endfor %}
-                        </p>
-                    {% endif %}
-                </div>
-            </li>
-        </ul>
+        <h3>
+          {{ comment.field_os2web_hearings_reply_name.value }} - {{ comment.created.value | format_date('os2core_date_medium') }}
+        </h3>
+
+        {% set body = {
+          '#type':   'processed_text',
+          '#text':    comment.comment_body.value,
+          '#format':  comment.comment_body.format,
+        } %}
+        <div>{{ body }}</div>
+        <div>
+          {% if comment.field_os2web_hearings_reply_docs.value is not empty %}
+            <p>
+              <strong>{{ comment.field_os2web_hearings_reply_docs.fieldDefinition.label }}:</strong><br />
+              {% for file in comments_files[comment.id] %}
+                - <a href="{{ file.url }}">{{ file.name }}</a><br/>
+              {% endfor %}
+            </p>
+          {% endif %}
+        </div>
+        <hr>
     {% endfor %}
 {% endif %}
