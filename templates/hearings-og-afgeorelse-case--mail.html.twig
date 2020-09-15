@@ -23,9 +23,9 @@
 </p>
 {% if node.body.value is not empty %}
     {% set body = {
-        '#type':   'processed_text',
-        '#text':    node.body.value,
-        '#format':  node.body.format,
+        '#type': 'processed_text',
+        '#text': node.body.value,
+        '#format': node.body.format,
     } %}
     <div>
         <div><strong>{{ node.body.fieldDefinition.label }}:</strong></div>
@@ -53,13 +53,13 @@
     <h2>{{ node.field_os2web_hearings_reply.fieldDefinition.label }}</h2>
     {% for comment in comments %}
         <h3>
-          {{ comment.field_os2web_hearings_reply_name.value }} - {{ comment.created.value | format_date('os2core_date_medium') }}
+          {{ comment.field_os2web_hearings_reply_name.value }} - {{ comment.created.value|format_date('os2core_date_medium') }}
         </h3>
 
         {% set body = {
-          '#type':   'processed_text',
-          '#text':    comment.comment_body.value,
-          '#format':  comment.comment_body.format,
+          '#type': 'processed_text',
+          '#text': comment.comment_body.value,
+          '#format': comment.comment_body.format,
         } %}
         <div>{{ body }}</div>
         <div>
