@@ -344,6 +344,9 @@ function os2web_hearings_preprocess_node(&$variables) {
 
     /** @var \Drupal\Core\Datetime\DrupalDateTime $endDate */
     $endDate = $hearing->field_os2web_hearings_end_date->date;
+    $type_value = $hearing->field_os2web_hearings_type->referencedEntities();
+    $type = $type_value[0]->label();
+    $variables['content']['#is_decision'] = ($type == OS2WEB_HEARINGS_TYPE_DECISIONS);
 
     if ($endDate->getTimestamp() < time()) {
       $variables['content']['#closed'] = TRUE;
