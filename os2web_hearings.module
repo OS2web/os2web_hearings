@@ -13,6 +13,7 @@ use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\Entity\Node;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\os2web_hearings\Form\SettingsForm;
 
 define('OS2WEB_HEARINGS_STATUS_ACTIVE_NAME', 'I gang');
 define('OS2WEB_HEARINGS_STATUS_CLOSED_NAME', 'Afsluttet');
@@ -328,7 +329,8 @@ function _os2web_hearings_send_email_notification($node) {
     \Drupal::logger('os2web_hearings')->warning(t('Notification email is empty. Can not send email notification for os2web_hearings_hearing_case with id @nid.', ['@nid' => $node->id()]));
     return;
   }
-  $mailto = $node->field_os2web_hearings_not_email->first()->value;
+  $settingFormConfig = \Drupal::config(SettingsForm::$configName);
+  $mailto = $settingFormConfig->get('sbsys_email');
   $mail_manager = \Drupal::service('plugin.manager.mail');
   if (!$mail_manager->mail('os2web_hearings', 'default', $mailto, $langcode, $params)) {
     \Drupal::logger('os2web_hearings')->error(t('Sending of email notification for os2web_hearings_hearing_case with id @nid failed.', ['@nid' => $node->id()]));

@@ -1,0 +1,7 @@
+os2web_hearings.settings:
+  path: '/admin/config/system/os2web-hearings'
+  defaults:
+    _form: '\Drupal\os2web_hearings\Form\SettingsForm'
+    _title: 'OS2Web Hearings settings'
+  requirements:
+    _permission: 'administer os2web_meetings configuration'

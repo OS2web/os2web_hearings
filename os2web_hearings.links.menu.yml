@@ -1,0 +1,5 @@
+os2web_hearings.settings:
+  title: OS2Web Hearings settings
+  description: Settings for OS2Web Hearings.
+  route_name: os2web_hearings.settings
+  parent: system.admin_config_system

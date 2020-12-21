@@ -1,0 +1,3 @@
+administer os2web_hearings configuration:
+  title: 'Administer OS2Web Hearings configuration'
+  restrict access: true
