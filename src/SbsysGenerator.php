@@ -150,6 +150,7 @@ class SbsysGenerator {
         'TitelTekst' => $hearing->getTitle(),
         'BodyTekst' => $hearing->body->value,
       ],
+      'Email' => $hearing->field_os2web_hearings_not_email->isEmpty() ? '' : $hearing->field_os2web_hearings_not_email->first()->value,
       'MaaSendesTilDFF' => 'ja',
     ];
 
