@@ -200,11 +200,11 @@ function os2web_hearings_form_views_exposed_form_alter(&$form, FormStateInterfac
     $form['field_os2web_hearings_status_target_id'] = $status_filter;
 
     // Setting default hearings type to Hearings, if it's empty.
-    $request = \Drupal::request();
+    /*$request = \Drupal::request();
     if (is_null($request->get('field_os2web_hearings_type_target_id'))) {
       $hearingsKey = array_search(OS2WEB_HEARINGS_TYPE_HEARINGS, $form['field_os2web_hearings_type_target_id']['#options']);
       $form['field_os2web_hearings_type_target_id']['#value'] = $hearingsKey;
-    }
+    }*/
   }
 }
 
@@ -362,6 +362,7 @@ function os2web_hearings_preprocess_node(&$variables) {
     else {
       $variables['content']['#closed'] = FALSE;
     }
+    $variables['content']['destination'] = \Drupal::request()->server->get('HTTP_REFERER');
   }
 }
 
