@@ -8,7 +8,7 @@ id: node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
 field_name: field_os2web_hearings_sbsys_case
 entity_type: node
 bundle: os2web_hearings_hearing_case
-label: 'SBsys sags nummer'
+label: 'SBsys sagsnummer'
 description: ''
 required: false
 translatable: false

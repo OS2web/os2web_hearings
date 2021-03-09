@@ -242,3 +242,16 @@ function os2web_hearings_update_8802() {
     os2web_hearings_update_entity_from_yml('core.entity_view_display.' . $yaml_id, 'entity_view_display', $yaml_id, $components);
   }
 }
+
+/**
+ * Renaming "SBsys sags nummer" field to "SBsys sagsnummer"
+ */
+function os2web_hearings_update_8803() {
+  $path = drupal_get_path('module', 'os2web_hearings');
+
+  /** @var \Drupal\Core\Config\StorageInterface $active_storage */
+  $active_storage = \Drupal::service('config.storage');
+
+  // Updating view.
+  $active_storage->write('field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case', Yaml::parse(file_get_contents($path . '/config/optional/field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case.yml')));
+}
