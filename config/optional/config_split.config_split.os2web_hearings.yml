@@ -4,14 +4,13 @@ dependencies: {  }
 id: os2web_hearings
 label: 'OS2Web hearings'
 description: ''
+weight: 0
+storage: folder
 folder: modules/contrib/os2web_hearings/config/optional
 module: {  }
 theme: {  }
-blacklist:
+complete_list:
   - 'os2web_hearings*'
   - '*os2web_hearings'
   - '*os2web_hearings*'
-graylist: {  }
-graylist_dependents: true
-graylist_skip_equal: true
-weight: 0
+partial_list: {  }

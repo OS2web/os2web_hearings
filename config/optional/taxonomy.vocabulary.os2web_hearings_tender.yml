@@ -1,0 +1,7 @@
+langcode: da
+status: true
+dependencies: {  }
+name: 'OS2Web Hearings tender'
+vid: os2web_hearings_tender
+description: 'Tender classificator for OS2Web Hearing'
+weight: 0

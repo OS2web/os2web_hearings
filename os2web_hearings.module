@@ -362,6 +362,12 @@ function os2web_hearings_preprocess_node(&$variables) {
     else {
       $variables['content']['#closed'] = FALSE;
     }
+
+    $settingFormConfig = \Drupal::config(SettingsForm::$configName);
+    if ($settingFormConfig->get('disable_comments')) {
+      $variables['content']['#closed'] = TRUE;
+    }
+
     $variables['content']['destination'] = \Drupal::request()->server->get('HTTP_REFERER');
   }
 }

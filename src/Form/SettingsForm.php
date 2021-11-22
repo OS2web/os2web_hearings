@@ -43,6 +43,15 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config(SettingsForm::$configName)
         ->get('sbsys_email'),
     ];
+
+    $form['disable_comments'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Diabled comments (globally)'),
+      '#description' => $this->t('This decides if all hearing are present as closed - commenting disabled.'),
+      '#default_value' => $this->config(SettingsForm::$configName)
+        ->get('disable_comments'),
+    ];
+
     $form['submit'] = [
       '#type' => 'submit',
       '#value' => $this->t('Submit'),
@@ -61,6 +70,10 @@ class SettingsForm extends ConfigFormBase {
       $config->set($key, $value);
     }
     $config->save();
+
+    // Clearing cache to render the Hearings correctly (disable_comments
+    // changes Hearing rendering).
+    \Drupal::service('cache.render')->invalidateAll();
 
     parent::submitForm($form, $form_state);
   }

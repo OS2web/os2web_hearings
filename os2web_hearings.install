@@ -4,6 +4,7 @@ use Drupal\taxonomy\Entity\Term;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Component\Utility\NestedArray;
+use Drupal\taxonomy\Entity\Vocabulary;
 use Drupal\user\Entity\Role;
 use Symfony\Component\Yaml\Yaml;
 
@@ -254,4 +255,37 @@ function os2web_hearings_update_8803() {
 
   // Updating view.
   $active_storage->write('field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case', Yaml::parse(file_get_contents($path . '/config/optional/field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case.yml')));
+}
+
+/**
+ * Adding field "Abud (os2web_headrings_tender)" and OS2Web Hearings Tender tax.
+ */
+function os2web_hearings_update_8804() {
+  $path = drupal_get_path('module', 'os2web_hearings');
+
+  // Creating new taxonomy - os2web_hearings_tender.
+  $vid = "os2web_hearings_tender";
+  $name = "OS2Web Headring tender";
+  $vocabularies = Vocabulary::loadMultiple();
+  if (!isset($vocabularies[$vid])) {
+    $vocabulary = Vocabulary::create(array(
+      'vid' => $vid,
+      //'machine_name' => $vid,
+      'description' => '',
+      'name' => $name,
+    ));
+    $vocabulary->save();
+  }
+
+  // Create field storage.
+  $storageConfug = Yaml::parse(file_get_contents($path . '/config/optional/field.storage.node.field_os2web_hearings_tender.yml'));
+  if (!FieldStorageConfig::loadByName($storageConfug['entity_type'], $storageConfug['field_name'])) {
+    FieldStorageConfig::create($storageConfug)->save();
+  }
+
+  // Create field instance.
+  $fieldConfig = Yaml::parse(file_get_contents($path . '/config/optional/field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_tender.yml'));
+  if (!FieldConfig::loadByName($fieldConfig['entity_type'], $fieldConfig['bundle'], $fieldConfig['field_name'])) {
+    FieldConfig::create($fieldConfig)->save();
+  }
 }
