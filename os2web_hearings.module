@@ -27,7 +27,20 @@ define('OS2WEB_HEARINGS_TYPE_DECISIONS', 'Afgørelser');
  * Adding meeting search form into paragraph.
  */
 function os2web_hearings_preprocess_paragraph__os2web_hearings_search(&$variables) {
-  $variables['content'] = views_embed_view('os2web_hearings', 'os2web_hearings_embed_search_simple');
+  if ($variables['view_mode'] == 'preview') {
+    return;
+  }
+
+  $paragraph = $variables['paragraph'];
+  // Getting the view type.
+  $type = 'os2web_hearings_embed_search_simple';
+
+  $type_value = $paragraph->get('field_os2web_hearings_search_typ')->getValue();
+  if (!empty($type_value[0]['value'])) {
+    $type = $type_value[0]['value'];
+  }
+
+  $variables ['content'] = views_embed_view('os2web_hearings', $type);
 }
 
 /**

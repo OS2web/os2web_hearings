@@ -13,6 +13,7 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_tender
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
     - node.type.os2web_hearings_hearing_case
   module:
@@ -78,6 +79,7 @@ hidden:
   field_os2web_hearings_reply: true
   field_os2web_hearings_sbsys_case: true
   field_os2web_hearings_status: true
+  field_os2web_hearings_tender: true
   field_os2web_hearings_type: true
   langcode: true
   links: true

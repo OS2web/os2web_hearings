@@ -5,6 +5,7 @@ dependencies:
     - core.entity_view_mode.node.teaser
     - node.type.os2web_hearings_hearing_case
     - taxonomy.vocabulary.os2web_hearings_status
+    - taxonomy.vocabulary.os2web_hearings_tender
     - taxonomy.vocabulary.os2web_hearings_type
   module:
     - better_exposed_filters
@@ -82,6 +83,14 @@ display:
                     filter_rewrite_values: ''
                   collapsible: false
                   is_secondary: false
+              field_os2web_hearings_tender_target_id:
+                plugin_id: default
+                advanced:
+                  sort_options: false
+                  rewrite:
+                    filter_rewrite_values: ''
+                  collapsible: false
+                  is_secondary: false
               field_os2web_hearings_status_target_id:
                 plugin_id: bef
                 advanced:
@@ -92,7 +101,7 @@ display:
                   is_secondary: false
                 select_all_none: false
                 select_all_none_nested: false
-                display_inline: 1
+                display_inline: true
       pager:
         type: mini
         options:
@@ -350,10 +359,217 @@ display:
   os2web_hearings_embed_search_simple:
     display_plugin: embed
     id: os2web_hearings_embed_search_simple
-    display_title: Embed
+    display_title: 'Embed (Search simple)'
     position: 2
     display_options:
       display_extenders: {  }
+      display_description: ''
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_content'
+        - 'languages:language_interface'
+        - url
+        - url.query_args
+        - 'url.query_args:sort_by'
+        - 'url.query_args:sort_order'
+        - user
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  os2web_hearings_embed_search_tender:
+    display_plugin: embed
+    id: os2web_hearings_embed_search_tender
+    display_title: 'Embed (Search with Tender)'
+    position: 2
+    display_options:
+      display_extenders: {  }
+      display_description: ''
+      filters:
+        status:
+          value: '1'
+          table: node_field_data
+          field: status
+          plugin_id: boolean
+          entity_type: node
+          entity_field: status
+          id: status
+          expose:
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          value:
+            os2web_hearings_hearing_case: os2web_hearings_hearing_case
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          expose:
+            operator_limit_selection: false
+            operator_list: {  }
+          group: 1
+        field_os2web_hearings_type_target_id:
+          id: field_os2web_hearings_type_target_id
+          table: node__field_os2web_hearings_type
+          field: field_os2web_hearings_type_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value:
+            4509: 4509
+            4508: 4508
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_os2web_hearings_type_target_id_op
+            label: 'Høringer og afgørelser'
+            description: ''
+            use_operator: false
+            operator: field_os2web_hearings_type_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_os2web_hearings_type_target_id
+            required: true
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              editor: '0'
+              webmaster: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: os2web_hearings_type
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
+        field_os2web_hearings_tender_target_id:
+          id: field_os2web_hearings_tender_target_id
+          table: node__field_os2web_hearings_tender
+          field: field_os2web_hearings_tender_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value: {  }
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_os2web_hearings_tender_target_id_op
+            label: Udbud
+            description: ''
+            use_operator: false
+            operator: field_os2web_hearings_tender_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_os2web_hearings_tender_target_id
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              editor: '0'
+              webmaster: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: false
+          type: select
+          limit: true
+          vid: os2web_hearings_tender
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
+        field_os2web_hearings_status_target_id:
+          id: field_os2web_hearings_status_target_id
+          table: node__field_os2web_hearings_status
+          field: field_os2web_hearings_status_target_id
+          relationship: none
+          group_type: group
+          admin_label: ''
+          operator: or
+          value:
+            4511: 4511
+            4510: 4510
+          group: 1
+          exposed: true
+          expose:
+            operator_id: field_os2web_hearings_status_target_id_op
+            label: Status
+            description: ''
+            use_operator: false
+            operator: field_os2web_hearings_status_target_id_op
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: field_os2web_hearings_status_target_id
+            required: true
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+              anonymous: '0'
+              administrator: '0'
+              editor: '0'
+              webmaster: '0'
+            reduce: false
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+          reduce_duplicates: true
+          type: select
+          limit: true
+          vid: os2web_hearings_status
+          hierarchy: false
+          error_message: true
+          plugin_id: taxonomy_index_tid
+      defaults:
+        filters: false
+        filter_groups: false
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
     cache_metadata:
       max-age: -1
       contexts:

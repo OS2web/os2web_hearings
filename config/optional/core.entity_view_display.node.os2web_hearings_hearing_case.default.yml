@@ -2,7 +2,6 @@ langcode: da
 status: true
 dependencies:
   config:
-    - core.entity_view_display.comment.os2web_hearings_hearing_reply.default
     - field.field.node.os2web_hearings_hearing_case.body
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
@@ -13,10 +12,10 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_tender
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
     - node.type.os2web_hearings_hearing_case
   module:
-    - comment
     - datetime
     - file
     - text
@@ -73,18 +72,17 @@ content:
     third_party_settings: {  }
     type: datetime_default
     region: content
-  field_os2web_hearings_reply:
-    type: comment_default
-    weight: 8
+  field_os2web_hearings_tender:
+    type: entity_reference_label
+    weight: 3
     region: content
-    label: above
+    label: hidden
     settings:
-      view_mode: default
-      pager_id: 0
+      link: false
     third_party_settings: {  }
   field_os2web_hearings_type:
     type: entity_reference_label
-    weight: 3
+    weight: 2
     region: content
     label: above
     settings:
@@ -101,12 +99,13 @@ content:
     third_party_settings: {  }
     region: content
   links:
-    weight: 9
+    weight: 8
     region: content
     settings: {  }
     third_party_settings: {  }
 hidden:
   field_os2web_hearings_not_email: true
+  field_os2web_hearings_reply: true
   field_os2web_hearings_sbsys_case: true
   field_os2web_hearings_status: true
   langcode: true

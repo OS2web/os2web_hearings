@@ -258,14 +258,14 @@ function os2web_hearings_update_8803() {
 }
 
 /**
- * Adding field "Abud (os2web_headrings_tender)" and OS2Web Hearings Tender tax.
+ * Adding field "Abud (os2web_hearings_tender)" and OS2Web Hearings Tender tax.
  */
 function os2web_hearings_update_8804() {
   $path = drupal_get_path('module', 'os2web_hearings');
 
   // Creating new taxonomy - os2web_hearings_tender.
   $vid = "os2web_hearings_tender";
-  $name = "OS2Web Headring tender";
+  $name = "OS2Web Hearing tender";
   $vocabularies = Vocabulary::loadMultiple();
   if (!isset($vocabularies[$vid])) {
     $vocabulary = Vocabulary::create(array(
@@ -288,4 +288,34 @@ function os2web_hearings_update_8804() {
   if (!FieldConfig::loadByName($fieldConfig['entity_type'], $fieldConfig['bundle'], $fieldConfig['field_name'])) {
     FieldConfig::create($fieldConfig)->save();
   }
+}
+
+/**
+ * Adding Hearing view "Search with tender".
+ */
+function os2web_hearings_update_8805() {
+  $path = drupal_get_path('module', 'os2web_hearings');
+
+  // Create field storage - field_os2web_hearings_search_typ.
+  $storageConfig = Yaml::parse(file_get_contents($path . '/config/optional/field.storage.paragraph.field_os2web_hearings_search_typ.yml'));
+  // Adjusting allowed values options.
+  $allowed_values = [];
+  foreach ($storageConfig['settings']['allowed_values'] as $option) {
+    $allowed_values[$option['value']] = $option['label'];
+  }
+  $storageConfig['settings']['allowed_values'] = $allowed_values;
+
+  if (!FieldStorageConfig::loadByName($storageConfig['entity_type'], $storageConfig['field_name'])) {
+    FieldStorageConfig::create($storageConfig)->save();
+  }
+
+  // Create field instance - field_os2web_hearings_search_typ.
+  $fieldConfig = Yaml::parse(file_get_contents($path . '/config/optional/field.field.paragraph.os2web_hearings_search.field_os2web_hearings_search_typ.yml'));
+  if (!FieldConfig::loadByName($fieldConfig['entity_type'], $fieldConfig['bundle'], $fieldConfig['field_name'])) {
+    FieldConfig::create($fieldConfig)->save();
+  }
+
+  // Updating view.
+  $active_storage = \Drupal::service('config.storage');
+  $active_storage->write('views.view.os2web_hearings.yml', Yaml::parse(file_get_contents($path . '/config/optional/views.view.os2web_hearings.yml')));
 }
