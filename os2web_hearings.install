@@ -317,5 +317,5 @@ function os2web_hearings_update_8805() {
 
   // Updating view.
   $active_storage = \Drupal::service('config.storage');
-  $active_storage->write('views.view.os2web_hearings.yml', Yaml::parse(file_get_contents($path . '/config/optional/views.view.os2web_hearings.yml')));
+  $active_storage->write('views.view.os2web_hearings', Yaml::parse(file_get_contents($path . '/config/optional/views.view.os2web_hearings.yml')));
 }
