@@ -319,3 +319,58 @@ function os2web_hearings_update_8805() {
   $active_storage = \Drupal::service('config.storage');
   $active_storage->write('views.view.os2web_hearings', Yaml::parse(file_get_contents($path . '/config/optional/views.view.os2web_hearings.yml')));
 }
+
+/**
+ * Adding new taxonomy os2web_hearings_category.
+ */
+function os2web_hearings_update_8806() {
+  $path = drupal_get_path('module','os2web_hearings');
+  $active_storage = \Drupal::service('config.storage');
+  $active_storage->write('taxonomy.vocabulary.os2web_hearings_categories', Yaml::parse(file_get_contents($path . '/config/optional/taxonomy.vocabulary.os2web_hearings_categories.yml')));
+  // Creating OS2Web Hearings Category: "Budget" and "Landzonetilladelse".
+  Term::create([
+    'vid' => 'os2web_hearings_categories',
+    'name' => OS2WEB_HEARINGS_CATEGORIES_BUDGET,
+  ])->save();
+  Term::create([
+    'vid' => 'os2web_hearings_categories',
+    'name' => OS2WEB_HEARINGS_TYPE_LANDZONETILLADELSE,
+  ])->save();
+
+  // Create field storage.
+  $storageConfug = Yaml::parse(file_get_contents($path . '/config/optional/field.storage.node.field_os2web_hearings_category.yml'));
+  if (!FieldStorageConfig::loadByName($storageConfug['entity_type'], $storageConfug['field_name'])) {
+    FieldStorageConfig::create($storageConfug)->save();
+  }
+
+  // Create field instance.
+  $fieldConfig = Yaml::parse(file_get_contents($path . '/config/optional/field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_category.yml'));
+  if (!FieldConfig::loadByName($fieldConfig['entity_type'], $fieldConfig['bundle'], $fieldConfig['field_name'])) {
+    FieldConfig::create($fieldConfig)->save();
+  }
+  os2web_hearings_update_entity_from_yml('core.entity_form_display.node.os2web_hearings_hearing_case.default', 'entity_form_display', 'node.os2web_hearings_hearing_case.default', [
+    'field_os2web_hearings_category' => 'content.field_os2web_hearings_category',
+    ]
+  );
+  os2web_hearings_update_entity_from_yml('core.entity_view_display.node.os2web_hearings_hearing_case.default', 'entity_view_display', 'node.os2web_hearings_hearing_case.default', [
+    'field_os2web_hearings_category' => 'content.field_os2web_hearings_category',
+    ]
+  );
+  os2web_hearings_update_entity_from_yml('core.entity_view_display.node.os2web_hearings_hearing_case.default', 'entity_view_display', 'node.os2web_hearings_hearing_case.teaser', [
+    'field_os2web_hearings_category' => 'content.field_os2web_hearings_category',
+    ]
+  );
+  os2web_hearings_update_entity_from_yml('core.entity_view_display.node.os2web_hearings_hearing_case.default', 'entity_view_display', 'node.os2web_hearings_hearing_case.default', [
+    'field_os2web_hearings_category' => 'content.field_os2web_hearings_category',
+    ]
+  );
+
+  // Updating view.
+  $active_storage = \Drupal::service('config.storage');
+  $active_storage->write('views.view.os2web_hearings', Yaml::parse(file_get_contents($path . '/config/optional/views.view.os2web_hearings.yml')));
+
+  // Updating paragraph.
+  $active_storage = \Drupal::service('config.storage');
+  $active_storage->write('field.storage.paragraph.field_os2web_hearings_search_typ', Yaml::parse(file_get_contents($path . '/config/optional/field.storage.paragraph.field_os2web_hearings_search_typ.yml')));
+
+}

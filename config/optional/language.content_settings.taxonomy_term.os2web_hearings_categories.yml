@@ -1,0 +1,11 @@
+uuid: cfbbebe7-662a-4a61-a687-ea8ec31535ce
+langcode: en
+status: true
+dependencies:
+  config:
+    - taxonomy.vocabulary.os2web_hearings_categories
+id: taxonomy_term.os2web_hearings_categories
+target_entity_type_id: taxonomy_term
+target_bundle: os2web_hearings_categories
+default_langcode: site_default
+language_alterable: false

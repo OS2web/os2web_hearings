@@ -1,3 +1,4 @@
+uuid: 59d7255f-4070-4aa1-b3be-a28f8e6cde64
 langcode: da
 status: true
 dependencies:
@@ -16,6 +17,12 @@ settings:
     -
       value: os2web_hearings_embed_search_tender
       label: 'Søgning med udbud'
+    -
+      value: os2web_hearings_embed_search_category
+      label: 'Søgning med category'
+    -
+      value: os2web_hearings_embed_search_tender_category
+      label: 'Søgning med udbud og category'
   allowed_values_function: ''
 module: options
 locked: false

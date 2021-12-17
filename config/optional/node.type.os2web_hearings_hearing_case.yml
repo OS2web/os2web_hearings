@@ -1,3 +1,4 @@
+uuid: f4f5b726-a5ac-4c35-a84e-71147b829eb4
 langcode: da
 status: true
 dependencies:
@@ -20,7 +21,10 @@ third_party_settings:
     unpublish_enable: true
     unpublish_required: false
     unpublish_revision: true
-name: 'Høringer og afgørelser'
+    show_message_after_update: true
+_core:
+  default_config_hash: Yjqb3gNP35rhl3E142TdJyxZThf-jLpXxm7FrTnmLSI
+name: 'Høringer og udbud'
 type: os2web_hearings_hearing_case
 description: ''
 help: ''

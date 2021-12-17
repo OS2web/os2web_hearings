@@ -1,6 +1,9 @@
+uuid: fbb37b66-6559-4cb7-b83a-1d3012f81ea5
 langcode: da
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: b6iwNmd04yaB0CvuWLX0DHZmpTdla5ajInzdvi_w4Bg
 id: os2web_hearings_search
 label: 'Høring søgning'
 icon_uuid: null

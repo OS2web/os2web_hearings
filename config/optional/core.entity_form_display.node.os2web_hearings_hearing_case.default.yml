@@ -1,9 +1,11 @@
+uuid: e87a7c48-4cf5-45a8-bd57-748143137c2a
 langcode: da
 status: true
 dependencies:
   config:
     - field.field.node.os2web_hearings_hearing_case.body
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_category
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_heading
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_intro
@@ -11,6 +13,7 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_published
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_start_date
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_tender
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
@@ -22,6 +25,8 @@ dependencies:
     - path
     - scheduler
     - text
+_core:
+  default_config_hash: quuwTxR70XuL5plGbP4TAYX9oPf6Ue88buLcnDDnzvM
 id: node.os2web_hearings_hearing_case.default
 targetEntityType: node
 bundle: os2web_hearings_hearing_case
@@ -29,7 +34,7 @@ mode: default
 content:
   body:
     type: text_textarea_with_summary
-    weight: 6
+    weight: 8
     settings:
       rows: 9
       summary_rows: 3
@@ -39,19 +44,25 @@ content:
     region: content
   created:
     type: datetime_timestamp
-    weight: 7
+    weight: 9
     region: content
     settings: {  }
     third_party_settings: {  }
   field_os2web_hearings_attac_doc:
-    weight: 10
+    weight: 12
     settings:
       progress_indicator: throbber
     third_party_settings: {  }
     type: file_generic
     region: content
+  field_os2web_hearings_category:
+    weight: 6
+    settings: {  }
+    third_party_settings: {  }
+    type: options_select
+    region: content
   field_os2web_hearings_end_date:
-    weight: 4
+    weight: 5
     settings: {  }
     third_party_settings: {  }
     type: datetime_default
@@ -73,7 +84,7 @@ content:
     type: string_textarea
     region: content
   field_os2web_hearings_not_email:
-    weight: 11
+    weight: 13
     settings:
       size: 60
       placeholder: ''
@@ -81,22 +92,24 @@ content:
     type: email_default
     region: content
   field_os2web_hearings_sbsys_case:
-    weight: 13
+    weight: 15
     settings:
       size: 60
       placeholder: ''
     third_party_settings: {  }
     type: string_textfield
     region: content
-  field_os2web_hearings_tender:
-    type: entity_reference_autocomplete
-    weight: 5
+  field_os2web_hearings_start_date:
+    weight: 4
+    settings: {  }
+    third_party_settings: {  }
+    type: datetime_default
     region: content
-    settings:
-      match_operator: CONTAINS
-      match_limit: 10
-      size: 60
-      placeholder: ''
+  field_os2web_hearings_tender:
+    type: options_select
+    weight: 7
+    region: content
+    settings: {  }
     third_party_settings: {  }
   field_os2web_hearings_type:
     weight: 1
@@ -114,20 +127,20 @@ content:
     region: content
   langcode:
     type: language_select
-    weight: 16
+    weight: 18
     region: content
     settings:
       include_locked: true
     third_party_settings: {  }
   moderation_state:
     type: moderation_state_default
-    weight: 17
+    weight: 19
     settings: {  }
     region: content
     third_party_settings: {  }
   path:
     type: path
-    weight: 15
+    weight: 17
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -135,23 +148,23 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 8
+    weight: 10
     region: content
     third_party_settings: {  }
   publish_on:
     type: datetime_timestamp_no_default
-    weight: 14
+    weight: 16
     region: content
     settings: {  }
     third_party_settings: {  }
   publish_state:
     type: options_select
-    weight: 22
+    weight: 24
     region: content
     settings: {  }
     third_party_settings: {  }
   scheduler_settings:
-    weight: 20
+    weight: 22
     region: content
     settings: {  }
     third_party_settings: {  }
@@ -159,14 +172,14 @@ content:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 19
+    weight: 21
     region: content
     third_party_settings: {  }
   sticky:
     type: boolean_checkbox
     settings:
       display_label: true
-    weight: 9
+    weight: 11
     region: content
     third_party_settings: {  }
   title:
@@ -179,7 +192,7 @@ content:
     third_party_settings: {  }
   uid:
     type: entity_reference_autocomplete
-    weight: 18
+    weight: 20
     settings:
       match_operator: CONTAINS
       size: 60
@@ -189,18 +202,18 @@ content:
     third_party_settings: {  }
   unpublish_on:
     type: datetime_timestamp_no_default
-    weight: 12
+    weight: 14
     region: content
     settings: {  }
     third_party_settings: {  }
   unpublish_state:
     type: options_select
-    weight: 21
+    weight: 23
     region: content
     settings: {  }
     third_party_settings: {  }
   url_redirects:
-    weight: 23
+    weight: 25
     region: content
     settings: {  }
     third_party_settings: {  }

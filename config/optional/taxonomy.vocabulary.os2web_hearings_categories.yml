@@ -1,0 +1,8 @@
+uuid: 92e27897-ca0b-489f-bb4e-ed809ccda3bd
+langcode: da
+status: true
+dependencies: {  }
+name: 'OS2Web Hearings categories'
+vid: os2web_hearings_categories
+description: ''
+weight: 0

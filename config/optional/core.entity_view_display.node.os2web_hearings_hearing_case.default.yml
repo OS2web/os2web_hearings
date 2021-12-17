@@ -1,9 +1,11 @@
+uuid: 8ba18bb8-2e6f-4f68-bbcb-ce96f1ba5e70
 langcode: da
 status: true
 dependencies:
   config:
     - field.field.node.os2web_hearings_hearing_case.body
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_attac_doc
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_category
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_heading
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_intro
@@ -11,6 +13,7 @@ dependencies:
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_published
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_reply
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
+    - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_start_date
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_status
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_tender
     - field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_type
@@ -20,6 +23,8 @@ dependencies:
     - file
     - text
     - user
+_core:
+  default_config_hash: czYU7by8F4gVvBTfbotIOLN-KlRIycWCgphryu4Noz8
 id: node.os2web_hearings_hearing_case.default
 targetEntityType: node
 bundle: os2web_hearings_hearing_case
@@ -40,6 +45,14 @@ content:
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
+  field_os2web_hearings_category:
+    weight: 11
+    label: above
+    settings:
+      link: true
+    third_party_settings: {  }
+    type: entity_reference_label
+    region: content
   field_os2web_hearings_end_date:
     weight: 4
     label: above
@@ -69,6 +82,15 @@ content:
     settings:
       timezone_override: ''
       format_type: os2core_date_medium
+    third_party_settings: {  }
+    type: datetime_default
+    region: content
+  field_os2web_hearings_start_date:
+    weight: 10
+    label: above
+    settings:
+      format_type: medium
+      timezone_override: ''
     third_party_settings: {  }
     type: datetime_default
     region: content

@@ -21,6 +21,9 @@ define('OS2WEB_HEARINGS_STATUS_CLOSED_NAME', 'Afsluttet');
 define('OS2WEB_HEARINGS_TYPE_HEARINGS', 'Høringer');
 define('OS2WEB_HEARINGS_TYPE_DECISIONS', 'Afgørelser');
 
+define('OS2WEB_HEARINGS_CATEGORIES_BUDGET', 'Budget');
+define('OS2WEB_HEARINGS_TYPE_LANDZONETILLADELSE', 'Landzonetilladelse');
+
 /**
  * Implements hook_preprocess_paragraph().
  *
