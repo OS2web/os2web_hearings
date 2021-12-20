@@ -209,18 +209,28 @@ function os2web_hearings_form_taxonomy_term_os2web_hearings_status_delete_form_a
  * Changes the fields position.
  */
 function os2web_hearings_form_views_exposed_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (in_array($form['#id'],
+    ['views-exposed-form-os2web-hearings-os2web-hearings-embed-search-tender-category',
+      'views-exposed-form-os2web-hearings-os2web-hearings-embed-search-category',
+      'views-exposed-form-os2web-hearings-os2web-hearings-embed-search-tender',
+      'views-exposed-form-os2web-hearings-os2web-hearings-embed-search-simple'
+    ])) {
+    $terms = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadByProperties(['vid' => 'os2web_hearings_status', 'name'=> OS2WEB_HEARINGS_STATUS_ACTIVE_NAME]);
+    $term = reset($terms);
+    $request = \Drupal::request();
+    if ($term && is_null($request->get('field_os2web_hearings_status_target_id'))) {
+      // get all input fields first then modify the one you want to change
+      $input = $form_state->getUserInput();
+      $input['field_os2web_hearings_status_target_id'] = $term->id();
+      $form_state->setUserInput($input);
+    }
+
+  }
   if ($form['#id'] == 'views-exposed-form-os2web-hearings-os2web-hearings-embed-search-simple') {
     // Making sure status filter is in the bottom.
     $status_filter = $form['field_os2web_hearings_status_target_id'];
     unset($form['field_os2web_hearings_status_target_id']);
     $form['field_os2web_hearings_status_target_id'] = $status_filter;
-
-    // Setting default hearings type to Hearings, if it's empty.
-    /*$request = \Drupal::request();
-    if (is_null($request->get('field_os2web_hearings_type_target_id'))) {
-      $hearingsKey = array_search(OS2WEB_HEARINGS_TYPE_HEARINGS, $form['field_os2web_hearings_type_target_id']['#options']);
-      $form['field_os2web_hearings_type_target_id']['#value'] = $hearingsKey;
-    }*/
   }
 }
 
