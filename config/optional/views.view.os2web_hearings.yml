@@ -513,7 +513,7 @@ display:
           exposed: true
           expose:
             operator_id: field_os2web_hearings_category_target_id_op
-            label: Category
+            label: Kategori
             description: ''
             use_operator: false
             operator: field_os2web_hearings_category_target_id_op
@@ -995,7 +995,7 @@ display:
           exposed: true
           expose:
             operator_id: field_os2web_hearings_category_target_id_op
-            label: Category
+            label: Kategori
             description: ''
             use_operator: false
             operator: field_os2web_hearings_category_target_id_op

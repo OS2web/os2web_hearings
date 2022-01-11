@@ -19,10 +19,10 @@ settings:
       label: 'Søgning med udbud'
     -
       value: os2web_hearings_embed_search_category
-      label: 'Søgning med category'
+      label: 'Søgning med kategori'
     -
       value: os2web_hearings_embed_search_tender_category
-      label: 'Søgning med udbud og category'
+      label: 'Søgning med udbud og kategori'
   allowed_values_function: ''
 module: options
 locked: false

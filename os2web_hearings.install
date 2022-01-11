@@ -374,3 +374,22 @@ function os2web_hearings_update_8806() {
   $active_storage->write('field.storage.paragraph.field_os2web_hearings_search_typ', Yaml::parse(file_get_contents($path . '/config/optional/field.storage.paragraph.field_os2web_hearings_search_typ.yml')));
 
 }
+/**
+ * Updating label os2web_hearings_category.
+ */
+function os2web_hearings_update_8807() {
+  $path = drupal_get_path('module','os2web_hearings');
+  $active_storage = \Drupal::service('config.storage');
+  
+  // Updating view.
+  $active_storage = \Drupal::service('config.storage');
+  $active_storage->write('views.view.os2web_hearings', Yaml::parse(file_get_contents($path . '/config/optional/views.view.os2web_hearings.yml')));
+
+  // Updating field label.
+  $active_storage = \Drupal::service('config.storage');
+  $active_storage->write('field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_category', Yaml::parse(file_get_contents($path . '/config/optional/field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_category.yml')));
+
+  // Updating paragraph.
+  $active_storage = \Drupal::service('config.storage');
+  $active_storage->write('field.storage.paragraph.field_os2web_hearings_search_typ', Yaml::parse(file_get_contents($path . '/config/optional/field.storage.paragraph.field_os2web_hearings_search_typ.yml')));
+}
