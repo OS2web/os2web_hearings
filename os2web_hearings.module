@@ -94,12 +94,30 @@ function os2web_hearings_cron() {
     return;
   }
   $closed_tid = reset($tids);
-
+  $tids = \Drupal::entityQuery('taxonomy_term')
+    ->condition('vid', 'os2web_hearings_type')
+    ->condition('name', OS2WEB_HEARINGS_TYPE_HEARINGS)
+    ->execute();
+  if (empty($tids)) {
+    \Drupal::logger('os2web_horing')
+      ->error('Term for hearings type not found');
+    return;
+  }
+  $hearing_type_tid = reset($tids);
+  $settingFormConfig = \Drupal::config(SettingsForm::$configName);
   /** @var \Drupal\node\NodeInterface $node */
   foreach (Node::loadMultiple($ids) as $node) {
     $node->set('field_os2web_hearings_status', $closed_tid);
     $node->save();
-    _os2web_hearings_send_email_notification($node);
+    if ($settingFormConfig->get('disable_sbsys_email_for_decision')) {
+      $hearing_type = $node->field_os2web_hearings_type->getValue();
+      if ($hearing_type[0]['target_id'] == $hearing_type_tid) {
+        _os2web_hearings_send_email_notification($node);
+      }
+    }
+    else {
+      _os2web_hearings_send_email_notification($node);
+    }
   }
 }
 
@@ -331,7 +349,6 @@ function _os2web_hearings_send_email_notification($node) {
       ];
     }
   }
-
   // Creating theme build array.
   $build = [
     '#theme' => 'hearings_og_afgeorelse_case__mail',

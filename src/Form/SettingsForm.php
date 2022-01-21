@@ -51,6 +51,13 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => $this->config(SettingsForm::$configName)
         ->get('disable_comments'),
     ];
+    $form['disable_sbsys_email_for_decision'] = [
+      '#type' => 'checkbox',
+      '#title' => $this->t('Diabled sending SBSYS emails for decision'),
+      '#description' => $this->t('This decides if SBSYS emails will be send for decision not only for hearings.'),
+      '#default_value' => $this->config(SettingsForm::$configName)
+        ->get('disable_sbsys_email_for_decision'),
+    ];
 
     $form['submit'] = [
       '#type' => 'submit',

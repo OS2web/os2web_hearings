@@ -55,7 +55,44 @@
         <h3>
           {{ comment.field_os2web_hearings_reply_name.value }} - {{ comment.created.value|format_date('os2core_date_medium') }}
         </h3>
-
+        <div>
+           {% if comment.field_os2web_hearings_reply_mail.value is not empty %}
+              <p>
+                <strong>{{ comment.field_os2web_hearings_reply_mail.fieldDefinition.label }}:</strong>
+                {{ comment.field_os2web_hearings_reply_mail.value }}
+              </p>
+            {% endif %}
+            {% if comment.field_os2web_hearings_reply_org.value is not empty %}
+              <p>
+                <strong>{{ comment.field_os2web_hearings_reply_org.fieldDefinition.label }}:</strong>
+                {{ comment.field_os2web_hearings_reply_org.value }}
+              </p>
+            {% endif %}
+            {% if comment.field_os2web_hearings_reply_addr.value is not empty %}
+              <p>
+                <strong>{{ comment.field_os2web_hearings_reply_addr.fieldDefinition.label }}:</strong>
+                {{ comment.field_os2web_hearings_reply_addr.value }}
+              </p>
+            {% endif %}
+            {% if comment.field_os2web_hearings_reply_zip.value is not empty %}
+              <p>
+                <strong>{{ comment.field_os2web_hearings_reply_zip.fieldDefinition.label }}:</strong>
+                {{ comment.field_os2web_hearings_reply_zip.value }}
+              </p>
+            {% endif %}
+            {% if comment.field_os2web_hearings_reply_city.value is not empty %}
+              <p>
+                <strong>{{ comment.field_os2web_hearings_reply_city.fieldDefinition.label }}:</strong>
+                {{ comment.field_os2web_hearings_reply_city.value }}
+              </p>
+            {% endif %}
+            {% if comment.field_os2web_hearings_reply_cinf.value is not empty %}
+              <p>
+                <strong>{{ comment.field_os2web_hearings_reply_cinf.fieldDefinition.label }}:</strong>
+                {{ comment.field_os2web_hearings_reply_cinf.value }}
+              </p>
+            {% endif %}
+        </div>
         {% set body = {
           '#type': 'processed_text',
           '#text': comment.comment_body.value,
