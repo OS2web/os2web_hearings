@@ -129,6 +129,13 @@ function os2web_hearings_node_presave(EntityInterface $entity) {
     return;
   }
 
+  if ($entity->isNew()) {
+    // If header is empty, use the title.
+    if (empty($entity->field_os2web_hearings_heading->value)) {
+      $entity->field_os2web_hearings_heading->value = $entity->label();
+    }
+  }
+
   /** @var Drupal\Core\Datetime\DrupalDateTime $endDate */
   $endDate = $entity->field_os2web_hearings_end_date->date;
 
