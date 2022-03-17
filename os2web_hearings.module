@@ -19,7 +19,7 @@ define('OS2WEB_HEARINGS_STATUS_ACTIVE_NAME', 'I gang');
 define('OS2WEB_HEARINGS_STATUS_CLOSED_NAME', 'Afsluttet');
 
 define('OS2WEB_HEARINGS_TYPE_HEARINGS', 'Høringer');
-define('OS2WEB_HEARINGS_TYPE_DECISIONS', 'Afgørelser');
+define('OS2WEB_HEARINGS_TYPE_DECISIONS', 'Afgørelserr');
 
 define('OS2WEB_HEARINGS_CATEGORIES_BUDGET', 'Budget');
 define('OS2WEB_HEARINGS_TYPE_LANDZONETILLADELSE', 'Landzonetilladelse');
@@ -240,7 +240,9 @@ function os2web_hearings_form_views_exposed_form_alter(&$form, FormStateInterfac
       'views-exposed-form-os2web-hearings-os2web-hearings-embed-search-tender',
       'views-exposed-form-os2web-hearings-os2web-hearings-embed-search-simple'
     ])) {
-    $terms = \Drupal::service('entity_type.manager')->getStorage('taxonomy_term')->loadByProperties(['vid' => 'os2web_hearings_status', 'name'=> OS2WEB_HEARINGS_STATUS_ACTIVE_NAME]);
+    $terms = \Drupal::service('entity_type.manager')
+      ->getStorage('taxonomy_term')
+      ->loadByProperties(['vid' => 'os2web_hearings_status', 'name'=> OS2WEB_HEARINGS_STATUS_ACTIVE_NAME]);
     $term = reset($terms);
     $request = \Drupal::request();
     if ($term && is_null($request->get('field_os2web_hearings_status_target_id'))) {
@@ -406,6 +408,21 @@ function os2web_hearings_preprocess_node(&$variables) {
     $type = $type_value[0]->label();
     $variables['content']['#is_decision'] = ($type == OS2WEB_HEARINGS_TYPE_DECISIONS);
 
+    $tender_value = $hearing->field_os2web_hearings_tender->referencedEntities();
+    $tender = $tender_value[0];
+
+    $reply_text = null;
+    if ($tender->id() == 4563) // udbud
+    {
+      $reply_text = 'Send dit tilbud.';
+    }
+    else if ($tender->id() == 4564) // høring
+    {
+      $reply_text = 'Send dit høringssvar.';
+    }
+
+    $variables['content']['#reply_text'] = $reply_text;
+
     if ($endDate->getTimestamp() < time()) {
       $variables['content']['#closed'] = TRUE;
     }
@@ -419,6 +436,8 @@ function os2web_hearings_preprocess_node(&$variables) {
     }
 
     $variables['content']['destination'] = \Drupal::request()->server->get('HTTP_REFERER');
+
+
   }
 }
 
