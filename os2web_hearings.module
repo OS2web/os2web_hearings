@@ -8,6 +8,7 @@
 use Drupal\comment\CommentManagerInterface;
 use Drupal\Component\Utility\Mail as MailHelper;
 use Drupal\Core\Datetime\DrupalDateTime;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\Entity\Node;
@@ -44,6 +45,7 @@ function os2web_hearings_preprocess_paragraph__os2web_hearings_search(&$variable
   }
 
   $variables ['content'] = views_embed_view('os2web_hearings', $type);
+  $variables ['#cache']['tags'][] = 'os2web_hearings_search_cache';
 }
 
 /**
@@ -128,6 +130,9 @@ function os2web_hearings_node_presave(EntityInterface $entity) {
   if ($entity->bundle() != 'os2web_hearings_hearing_case') {
     return;
   }
+
+  // Invalidating cache for all hearing search paragraphs.
+  Cache::invalidateTags(['os2web_hearings_search_cache']);
 
   if ($entity->isNew()) {
     // If header is empty, use the title.
