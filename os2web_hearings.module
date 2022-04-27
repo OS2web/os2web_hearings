@@ -44,8 +44,14 @@ function os2web_hearings_preprocess_paragraph__os2web_hearings_search(&$variable
     $type = $type_value[0]['value'];
   }
 
-  $variables ['content'] = views_embed_view('os2web_hearings', $type);
-  $variables ['#cache']['tags'][] = 'os2web_hearings_search_cache';
+  if (views_get_view_result('os2web_hearings', $type)) {
+    $variables['content'] = views_embed_view('os2web_hearings', $type);
+  }
+  else {
+    $variables['content'] = t('List is empty');
+  }
+
+  $variables['#cache']['tags'][] = 'os2web_hearings_search_cache';
 }
 
 /**
