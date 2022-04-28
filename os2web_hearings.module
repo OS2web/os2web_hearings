@@ -44,11 +44,26 @@ function os2web_hearings_preprocess_paragraph__os2web_hearings_search(&$variable
     $type = $type_value[0]['value'];
   }
 
-  if (views_get_view_result('os2web_hearings', $type)) {
-    $variables['content'] = views_embed_view('os2web_hearings', $type);
+  $view = \Drupal\views\Views::getView('os2web_hearings');
+  $view->setDisplay($type);
+  $view->preExecute();
+  $view->execute();
+
+  // Get Headers.
+  $headers = $view->display_handler->getHandlers('header');
+  $rendered_headers = [];
+  if (!empty($headers)) {
+    foreach ($headers as $header) {
+      $rendered_headers[] = $header->render();
+    }
+  }
+  $variables['content'][] = $rendered_headers;
+
+  if ($view->total_rows) {
+    $variables['content'][] = $view->render();
   }
   else {
-    $variables['content'] = t('List is empty');
+    $variables['content'][] = ['#markup' => t('List is empty')];
   }
 
   $variables['#cache']['tags'][] = 'os2web_hearings_search_cache';
