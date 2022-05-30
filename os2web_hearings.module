@@ -435,16 +435,21 @@ function os2web_hearings_preprocess_node(&$variables) {
     $variables['content']['#is_decision'] = ($type == OS2WEB_HEARINGS_TYPE_DECISIONS);
 
     $tender_value = $hearing->field_os2web_hearings_tender->referencedEntities();
-    $tender = $tender_value[0];
 
     $reply_text = null;
-    if ($tender->id() == 4563) // udbud
-    {
-      $reply_text = 'Send dit tilbud.';
-    }
-    else if ($tender->id() == 4564) // høring
-    {
-      $reply_text = 'Send dit høringssvar.';
+
+    if (!empty($tender_value[0])) {
+      $tender = $tender_value[0];
+      if (is_object($tender)) {
+        if ($tender->id() == 4563) // udbud
+        {
+          $reply_text = 'Send dit tilbud.';
+        }
+        else if ($tender->id() == 4564) // høring
+        {
+          $reply_text = 'Send dit høringssvar.';
+        }
+      }
     }
 
     $variables['content']['#reply_text'] = $reply_text;
