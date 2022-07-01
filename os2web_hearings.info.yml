@@ -11,3 +11,4 @@ dependencies:
   - drupal:views
   - better_exposed_filters
   - paragraphs
+  - form_options_attributes
