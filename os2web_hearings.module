@@ -59,12 +59,7 @@ function os2web_hearings_preprocess_paragraph__os2web_hearings_search(&$variable
   }
   $variables['content'][] = $rendered_headers;
 
-  if ($view->total_rows) {
-    $variables['content'][] = $view->render();
-  }
-  else {
-    $variables['content'][] = ['#markup' => t('List is empty')];
-  }
+  $variables['content'][] = $view->render();
 
   $variables['#cache']['tags'][] = 'os2web_hearings_search_cache';
 }
