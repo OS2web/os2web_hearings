@@ -9,6 +9,7 @@ dependencies:
   - drupal:taxonomy
   - drupal:text
   - drupal:views
+  - mailsystem
   - better_exposed_filters
   - paragraphs
   - form_options_attributes
