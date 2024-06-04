@@ -5,6 +5,8 @@ dependencies:
   module:
     - options
     - paragraphs
+_core:
+  default_config_hash: '-NfwIT-PrlBnf4MdzFdOHMEWsA7mcPy9BPYJeFWx5Pw'
 id: paragraph.field_os2web_hearings_search_typ
 field_name: field_os2web_hearings_search_typ
 entity_type: paragraph

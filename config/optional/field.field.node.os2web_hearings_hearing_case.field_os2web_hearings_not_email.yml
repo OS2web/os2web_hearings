@@ -1,9 +1,12 @@
+uuid: 1a93fe1f-5fca-496e-a9b4-bf04fd5097c4
 langcode: da
 status: true
 dependencies:
   config:
     - field.storage.node.field_os2web_hearings_not_email
     - node.type.os2web_hearings_hearing_case
+_core:
+  default_config_hash: 9ciF9T8KWO0KILXxcFCklRxSzuaXzUQBVUHb6ZOU1Ss
 id: node.os2web_hearings_hearing_case.field_os2web_hearings_not_email
 field_name: field_os2web_hearings_not_email
 entity_type: node

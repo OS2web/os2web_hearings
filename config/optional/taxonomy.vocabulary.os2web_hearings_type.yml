@@ -1,6 +1,9 @@
+uuid: e68b369f-1c7a-4cf0-aedd-201df542240d
 langcode: da
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: 2W7kMfE8oKYz_8LV72qQO8uQu4sgg3qhunUdq5dFv_o
 name: 'OS2Web Hearings Type'
 vid: os2web_hearings_type
 description: ''

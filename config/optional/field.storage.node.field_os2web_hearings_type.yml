@@ -1,9 +1,12 @@
+uuid: aa0dbc6a-29b0-4f12-a5f5-4f29e55b93fa
 langcode: da
 status: true
 dependencies:
   module:
     - node
     - taxonomy
+_core:
+  default_config_hash: IJqxITBj5A2gV0jqFS-vYbCe_rBGDL118G4cnnZjZuw
 id: node.field_os2web_hearings_type
 field_name: field_os2web_hearings_type
 entity_type: node

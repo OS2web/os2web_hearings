@@ -1,8 +1,11 @@
+uuid: db5579ff-7150-492f-a7d2-52ae853f927e
 langcode: da
 status: true
 dependencies:
   config:
     - node.type.os2web_hearings_hearing_case
+_core:
+  default_config_hash: 1RLmudiyTrqKrea_r9Kc7AL-8a2kz61JFjI7UccGeXo
 id: node.os2web_hearings_hearing_case.promote
 field_name: promote
 entity_type: node

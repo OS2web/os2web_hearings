@@ -1,9 +1,12 @@
+uuid: 56259d43-c87f-41f3-80c5-16fb814a2162
 langcode: da
 status: true
 dependencies:
   module:
     - node
     - taxonomy
+_core:
+  default_config_hash: CvSuggUA5QB_3vskoqtTht6HuLVNCuZM-qnNQ-wJlSc
 id: node.field_os2web_hearings_tender
 field_name: field_os2web_hearings_tender
 entity_type: node

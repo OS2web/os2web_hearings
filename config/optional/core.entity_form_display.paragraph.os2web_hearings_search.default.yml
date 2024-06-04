@@ -1,9 +1,12 @@
+uuid: 0adbea67-5727-4dac-a830-85d140e0bc8b
 langcode: da
 status: true
 dependencies:
   config:
     - field.field.paragraph.os2web_hearings_search.field_os2web_hearings_search_typ
     - paragraphs.paragraphs_type.os2web_hearings_search
+_core:
+  default_config_hash: q-Ur_YvbIZ5gGUG2WWaMVx2U-YJa1qoIOiqrpgHn6do
 id: paragraph.os2web_hearings_search.default
 targetEntityType: paragraph
 bundle: os2web_hearings_search

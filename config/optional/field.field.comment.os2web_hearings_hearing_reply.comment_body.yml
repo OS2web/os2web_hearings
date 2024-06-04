@@ -1,3 +1,4 @@
+uuid: 212213dc-73d4-4151-b356-857ac7be23a7
 langcode: da
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
     - field.storage.comment.comment_body
   module:
     - text
+_core:
+  default_config_hash: _Bs0oej8DP5wi2TWdXSRaMYjNijPxjwbHri2GoFgroQ
 id: comment.os2web_hearings_hearing_reply.comment_body
 field_name: comment_body
 entity_type: comment
@@ -16,5 +19,6 @@ required: true
 translatable: false
 default_value: {  }
 default_value_callback: ''
-settings: {  }
+settings:
+  allowed_formats: {  }
 field_type: text_long

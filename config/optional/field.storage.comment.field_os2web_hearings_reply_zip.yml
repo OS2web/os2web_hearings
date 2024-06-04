@@ -1,8 +1,11 @@
+uuid: cdb36421-525b-407d-9b8a-443b956995f1
 langcode: da
 status: true
 dependencies:
   module:
     - comment
+_core:
+  default_config_hash: AAgrNDhN9oxK2Li--VspZseA9cyfe-v5f0mFUBU01nY
 id: comment.field_os2web_hearings_reply_zip
 field_name: field_os2web_hearings_reply_zip
 entity_type: comment

@@ -1,8 +1,11 @@
+uuid: 90b20bdd-6e45-40e3-b130-cacf12e7b1b6
 langcode: da
 status: true
 dependencies:
   module:
     - comment
+_core:
+  default_config_hash: 6l837_clxETXu0cvyWPFQ4f_vPB9ACPwhHV-jn97u88
 id: comment.field_os2web_hearings_reply_arg
 field_name: field_os2web_hearings_reply_arg
 entity_type: comment

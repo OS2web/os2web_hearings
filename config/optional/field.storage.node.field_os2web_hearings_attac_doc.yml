@@ -1,9 +1,12 @@
+uuid: 7e4c6d67-e199-49ab-8349-1a2ed19e5a24
 langcode: da
 status: true
 dependencies:
   module:
     - file
     - node
+_core:
+  default_config_hash: 5dQnpzG-GqKTJ1HNAiEbRPQhYkFtLGBB42ZW4CMEz6s
 id: node.field_os2web_hearings_attac_doc
 field_name: field_os2web_hearings_attac_doc
 entity_type: node

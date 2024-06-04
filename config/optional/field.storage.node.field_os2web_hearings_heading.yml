@@ -1,8 +1,11 @@
+uuid: cad113b1-f466-4576-a09f-068bf3f756cb
 langcode: da
 status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: 2PGD6iHUdJ-9Hus8W-uTcvbFB9EiStCW2GsE-MgE2ow
 id: node.field_os2web_hearings_heading
 field_name: field_os2web_hearings_heading
 entity_type: node

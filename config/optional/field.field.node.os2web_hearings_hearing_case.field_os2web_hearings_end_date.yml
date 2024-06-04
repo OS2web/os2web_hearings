@@ -1,3 +1,4 @@
+uuid: 3b0249ff-9191-41ed-bedd-2911c8c00408
 langcode: da
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
     - node.type.os2web_hearings_hearing_case
   module:
     - datetime
+_core:
+  default_config_hash: SSC1Ip-wI_9mttx1_4OBk5Ec-shNRiHHw0u3DzY2zpM
 id: node.os2web_hearings_hearing_case.field_os2web_hearings_end_date
 field_name: field_os2web_hearings_end_date
 entity_type: node

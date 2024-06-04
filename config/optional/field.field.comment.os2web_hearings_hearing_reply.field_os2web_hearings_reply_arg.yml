@@ -1,9 +1,12 @@
+uuid: bd987326-1978-415f-b8d6-9f61b5787dce
 langcode: da
 status: true
 dependencies:
   config:
     - comment.type.os2web_hearings_hearing_reply
     - field.storage.comment.field_os2web_hearings_reply_arg
+_core:
+  default_config_hash: VcvqISIy2FswAoy47TEnX2mrabCOOQ3dHC6tpNYlMi4
 id: comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_arg
 field_name: field_os2web_hearings_reply_arg
 entity_type: comment

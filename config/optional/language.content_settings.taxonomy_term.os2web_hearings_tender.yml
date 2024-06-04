@@ -1,8 +1,11 @@
+uuid: 4b57794d-80ea-4134-95fe-4bc5a8891521
 langcode: da
 status: true
 dependencies:
   config:
     - taxonomy.vocabulary.os2web_hearings_tender
+_core:
+  default_config_hash: QTBjW-yZUYMNDSSJLZuz9q2uqy6-MQBkGmQKzAQInJc
 id: taxonomy_term.os2web_hearings_tender
 target_entity_type_id: taxonomy_term
 target_bundle: os2web_hearings_tender

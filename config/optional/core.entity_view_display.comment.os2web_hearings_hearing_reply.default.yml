@@ -1,3 +1,4 @@
+uuid: d2d00603-c60f-467e-b784-b20fa2ac6df0
 langcode: da
 status: true
 dependencies:
@@ -17,6 +18,8 @@ dependencies:
   module:
     - file
     - text
+_core:
+  default_config_hash: Tn5AI5OnQIfWt-XaM5eWpcQZ1LlVtj4zO8YQckmDMwI
 id: comment.os2web_hearings_hearing_reply.default
 targetEntityType: comment
 bundle: os2web_hearings_hearing_reply

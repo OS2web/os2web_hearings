@@ -1,8 +1,11 @@
+uuid: 284061cd-bf03-4409-b56f-21b6aaf3d7b0
 langcode: da
 status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: ezYgl6Sakk_Zhec0p0UlWi2bXGnpFZiIgI47bAdZjww
 id: node.field_os2web_hearings_not_email
 field_name: field_os2web_hearings_not_email
 entity_type: node

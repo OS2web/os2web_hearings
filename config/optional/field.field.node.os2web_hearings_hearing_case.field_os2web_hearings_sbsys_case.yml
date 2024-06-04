@@ -1,9 +1,12 @@
+uuid: 5e123e63-d385-4051-9583-f5ed62a4f11a
 langcode: da
 status: true
 dependencies:
   config:
     - field.storage.node.field_os2web_hearings_sbsys_case
     - node.type.os2web_hearings_hearing_case
+_core:
+  default_config_hash: 1Egpq3Eugy120Co1GTrgK8DRQ_Une6Jrm8CxeP-Uy8I
 id: node.os2web_hearings_hearing_case.field_os2web_hearings_sbsys_case
 field_name: field_os2web_hearings_sbsys_case
 entity_type: node

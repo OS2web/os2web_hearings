@@ -1,8 +1,11 @@
+uuid: f5264dcb-d61d-4dd1-9172-86541cd5507c
 langcode: da
 status: true
 dependencies:
   module:
     - comment
+_core:
+  default_config_hash: r5zNASBasaAiSFdPxWN-wveYJt44wT5IDcQww5Sx4Wg
 id: comment.field_os2web_hearings_reply_name
 field_name: field_os2web_hearings_reply_name
 entity_type: comment

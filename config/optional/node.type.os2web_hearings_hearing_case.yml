@@ -23,7 +23,7 @@ third_party_settings:
     unpublish_revision: true
     show_message_after_update: true
 _core:
-  default_config_hash: Yjqb3gNP35rhl3E142TdJyxZThf-jLpXxm7FrTnmLSI
+  default_config_hash: _qfdaSjz_9cHJvEkPOoHnU6mXDuG4g2IIj4gQqUJFXA
 name: 'Høringer og udbud'
 type: os2web_hearings_hearing_case
 description: ''

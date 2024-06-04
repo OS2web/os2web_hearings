@@ -1,9 +1,12 @@
+uuid: 745283b6-98e7-4795-a55a-9e4ac3a92555
 langcode: da
 status: true
 dependencies:
   module:
     - datetime
     - node
+_core:
+  default_config_hash: np4-ToHBpwO28oVSIWBB5RxlLV28nEa9BGRrxh7rKzc
 id: node.field_os2web_hearings_end_date
 field_name: field_os2web_hearings_end_date
 entity_type: node

@@ -1,8 +1,11 @@
+uuid: 909a4702-7be8-4b11-867f-8f338ebe524b
 langcode: da
 status: true
 dependencies:
   config:
     - node.type.os2web_hearings_hearing_case
+_core:
+  default_config_hash: Jqc0l43AyvO3Y1npL4_g2Dz47r-SS-VlHNJi7c-IzRA
 id: node.os2web_hearings_hearing_case.status
 field_name: status
 entity_type: node

@@ -1,8 +1,11 @@
+uuid: 255b1f94-0e66-46c4-a79d-fd5936cc2404
 langcode: da
 status: true
 dependencies:
   config:
     - taxonomy.vocabulary.os2web_hearings_status
+_core:
+  default_config_hash: VBF1m9X94WCuDZxnBrGPV6GaYiN3NQsDL-hAJRjVMuU
 id: taxonomy_term.os2web_hearings_status
 target_entity_type_id: taxonomy_term
 target_bundle: os2web_hearings_status

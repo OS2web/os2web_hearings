@@ -1,3 +1,4 @@
+uuid: c7013593-7862-454f-ae07-d35ec1cbce32
 langcode: da
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
     - field.storage.comment.field_os2web_hearings_reply_docs
   module:
     - file
+_core:
+  default_config_hash: 4pVZSHjEbBl8gtojA-NKRXsuT4HWI35_zWB6XSh8RwA
 id: comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_docs
 field_name: field_os2web_hearings_reply_docs
 entity_type: comment

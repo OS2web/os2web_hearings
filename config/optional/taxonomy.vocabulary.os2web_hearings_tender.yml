@@ -1,6 +1,9 @@
+uuid: cce7ba7a-f2d3-4fb6-b463-cabd840f74fb
 langcode: da
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: vMeTyMsCkiA8hOa5a3nPj-4v9IEm7OYTnFiufmvV12M
 name: 'OS2Web Hearing tender'
 vid: os2web_hearings_tender
 description: ''

@@ -1,9 +1,12 @@
+uuid: 2749e8ea-efcd-406c-8516-f99733b03386
 langcode: da
 status: true
 dependencies:
   module:
     - comment
     - node
+_core:
+  default_config_hash: lbvBDP_3-MdH3LCulh-yccHXsSVtEadW1es05AdYXls
 id: node.field_os2web_hearings_reply
 field_name: field_os2web_hearings_reply
 entity_type: node

@@ -1,8 +1,11 @@
+uuid: b0e2be32-a711-4f15-9d5a-56c3bc436895
 langcode: da
 status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: TqigaJ6daKKjMiJuOemWtIa61TlLsMmnsQteQ_ykFFs
 id: node.field_os2web_hearings_sbsys_case
 field_name: field_os2web_hearings_sbsys_case
 entity_type: node

@@ -1,9 +1,12 @@
+uuid: 614ea4e9-9f01-4b23-8257-1be974f25f11
 langcode: da
 status: true
 dependencies:
   config:
     - field.storage.node.field_os2web_hearings_heading
     - node.type.os2web_hearings_hearing_case
+_core:
+  default_config_hash: m2ZEfdG1E025e091B8VELGcTeH_iJ2E7d6J4a2G59pw
 id: node.os2web_hearings_hearing_case.field_os2web_hearings_heading
 field_name: field_os2web_hearings_heading
 entity_type: node

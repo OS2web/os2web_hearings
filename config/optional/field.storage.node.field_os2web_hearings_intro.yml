@@ -1,8 +1,11 @@
+uuid: f7389a15-ea1e-40ac-a3fe-ab170dab3947
 langcode: da
 status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: v30ddgajXUfsrDGrn1HIBGVwLH3cg3CyQGoRD5VToiU
 id: node.field_os2web_hearings_intro
 field_name: field_os2web_hearings_intro
 entity_type: node

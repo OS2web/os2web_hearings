@@ -1,3 +1,4 @@
+uuid: 388da122-b12f-49a2-97ee-c1dcf3970bc2
 langcode: da
 status: true
 dependencies:
@@ -6,6 +7,8 @@ dependencies:
     - node.type.os2web_hearings_hearing_case
   module:
     - datetime
+_core:
+  default_config_hash: ufbWgbkKA5hWbPb4Q9r_MRgi9_dagcCTScDU48LDHew
 id: node.os2web_hearings_hearing_case.field_os2web_hearings_published
 field_name: field_os2web_hearings_published
 entity_type: node

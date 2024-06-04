@@ -1,3 +1,4 @@
+uuid: bb9073f1-05a4-4a2b-9fdf-dcd0a9993a85
 langcode: da
 status: true
 dependencies:
@@ -5,6 +6,8 @@ dependencies:
     - field.storage.node.field_os2web_hearings_tender
     - node.type.os2web_hearings_hearing_case
     - taxonomy.vocabulary.os2web_hearings_tender
+_core:
+  default_config_hash: '-vTbxVsR_co6S_4qy0Td3JfY-3QQCG1Zqbp3PhGNrE0'
 id: node.os2web_hearings_hearing_case.field_os2web_hearings_tender
 field_name: field_os2web_hearings_tender
 entity_type: node
