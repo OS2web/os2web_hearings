@@ -466,7 +466,7 @@ function os2web_hearings_preprocess_node(&$variables) {
       $variables['content']['#closed'] = TRUE;
     }
 
-    $variables['content']['destination'] = \Drupal::request()->server->get('HTTP_REFERER');
+    $variables['content']['#destination'] = \Drupal::request()->server->get('HTTP_REFERER');
 
   }
 }
