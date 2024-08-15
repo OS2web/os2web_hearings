@@ -468,6 +468,62 @@ function os2web_hearings_preprocess_node(&$variables) {
 }
 
 /**
+ * Implements hook_preprocess_field().
+ */
+function os2web_hearings_preprocess_field(&$variables) {
+  $element = $variables['element'];
+  if ($element['#field_name'] == 'field_os2web_hearings_reply') {
+
+    foreach ($variables['items'][0]['content']['comments'] as $commentRendered) {
+      // Check if the rendered comment exists.
+      if (!isset($commentRendered['#comment'])) {
+        continue;
+      }
+
+      /** @var \Drupal\comment\Entity\Comment $comment */
+      $comment = $commentRendered['#comment'];
+      $speakerRoles = $comment->get('field_os2web_hearings_reply_sp_r')->referencedEntities();
+
+      // If there are no speaker roles, skip this iteration.
+      if (empty($speakerRoles)) {
+        continue;
+      }
+
+      /** @var \Drupal\taxonomy\Plugin\views\wizard\TaxonomyTerm $speakerRole */
+      $speakerRole = reset($speakerRoles);
+
+      // Initialize the speaker role section if it doesn't exist.
+      if (!isset($variables['#comments_speaker_role'][$speakerRole->id()])) {
+        $variables['#comments_speaker_role'][$speakerRole->id()] = [
+          'role' => $speakerRole->label(),
+          'comments_section' => [
+            [
+              'content' => [
+                'comments' => [
+                  '#sorted' => $variables['items'][0]['content']['comments']['#sorted'],
+                  '#pre_render' => $variables['items'][0]['content']['comments']['#pre_render'],
+                  'pager' => $variables['items'][0]['content']['comments']['pager'],
+                ],
+                '#comment_type' => 'os2web_hearings_hearing_reply',
+                '#comment_display_mode' => 0,
+                'comment_form' => []
+              ],
+              'attributes' => $variables['items'][0]['attributes']
+            ]
+          ]
+        ];
+      }
+
+      // Add the rendered comment to the speaker role section.
+      $variables['#comments_speaker_role'][$speakerRole->id()]['comments_section'][0]['content']['comments'][$comment->id()] = $commentRendered;
+
+      // Remove the comment from the original comments array.
+      unset($variables['items'][0]['content']['comments'][$comment->id()]);
+    }
+  }
+}
+
+/**
  * Implements hook_ENTITY_TYPE_insert().
  */
 function os2web_hearings_comment_insert(Drupal\Core\Entity\EntityInterface $entity) {

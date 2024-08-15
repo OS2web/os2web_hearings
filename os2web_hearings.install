@@ -380,7 +380,7 @@ function os2web_hearings_update_8806() {
 function os2web_hearings_update_8807() {
   $path = drupal_get_path('module','os2web_hearings');
   $active_storage = \Drupal::service('config.storage');
-  
+
   // Updating view.
   $active_storage = \Drupal::service('config.storage');
   $active_storage->write('views.view.os2web_hearings', Yaml::parse(file_get_contents($path . '/config/optional/views.view.os2web_hearings.yml')));
@@ -392,4 +392,45 @@ function os2web_hearings_update_8807() {
   // Updating paragraph.
   $active_storage = \Drupal::service('config.storage');
   $active_storage->write('field.storage.paragraph.field_os2web_hearings_search_typ', Yaml::parse(file_get_contents($path . '/config/optional/field.storage.paragraph.field_os2web_hearings_search_typ.yml')));
+}
+
+/**
+ * Adding field field_os2web_hearings_reply_sp_r.
+ */
+function os2web_hearings_update_8808() {
+  // Creating new taxonomy - os2web_hearings_tender.
+  $vid = "os2web_hearings_speaker_role";
+  $name = "OS2Web Hearings speaker role";
+  $vocabularies = Vocabulary::loadMultiple();
+  if (!isset($vocabularies[$vid])) {
+    $vocabulary = Vocabulary::create(array(
+      'vid' => $vid,
+      'description' => '',
+      'name' => $name,
+    ));
+    $vocabulary->save();
+  }
+
+  $path = drupal_get_path('module','os2web_hearings');
+
+  // Create field storage.
+  $storageConfig = Yaml::parse(file_get_contents($path . '/config/optional/field.storage.comment.field_os2web_hearings_reply_sp_r.yml'));
+  if (!FieldStorageConfig::loadByName($storageConfig['entity_type'], $storageConfig['field_name'])) {
+    FieldStorageConfig::create($storageConfig)->save();
+  }
+
+  // Create field instance.
+  $fieldConfig = Yaml::parse(file_get_contents($path . '/config/optional/field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_sp_r.yml'));
+  if (!FieldConfig::loadByName($fieldConfig['entity_type'], $fieldConfig['bundle'], $fieldConfig['field_name'])) {
+    FieldConfig::create($fieldConfig)->save();
+  }
+
+  os2web_hearings_update_entity_from_yml('core.entity_form_display.comment.os2web_hearings_hearing_reply.default', 'entity_form_display', 'comment.os2web_hearings_hearing_reply.default', [
+      'field_os2web_hearings_reply_sp_r' => 'content.field_os2web_hearings_reply_sp_r',
+    ]
+  );
+  os2web_hearings_update_entity_from_yml('core.entity_view_display.comment.os2web_hearings_hearing_reply.default', 'entity_view_display', 'comment.os2web_hearings_hearing_reply.default', [
+      'field_os2web_hearings_reply_sp_r' => 'content.field_os2web_hearings_reply_sp_r',
+    ]
+  );
 }

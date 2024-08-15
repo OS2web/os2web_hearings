@@ -1,0 +1,28 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - comment.type.os2web_hearings_hearing_reply
+    - field.storage.comment.field_os2web_hearings_reply_sp_r
+    - taxonomy.vocabulary.os2web_hearings_speaker_role
+id: comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_sp_r
+field_name: field_os2web_hearings_reply_sp_r
+entity_type: comment
+bundle: os2web_hearings_hearing_reply
+label: 'Udtaler rolle'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      os2web_hearings_speaker_role: os2web_hearings_speaker_role
+    sort:
+      field: name
+      direction: asc
+    auto_create: false
+    auto_create_bundle: ''
+field_type: entity_reference
