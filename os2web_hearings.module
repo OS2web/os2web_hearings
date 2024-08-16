@@ -287,6 +287,10 @@ function os2web_hearings_form_views_exposed_form_alter(&$form, FormStateInterfac
  */
 function os2web_hearings_form_comment_os2web_hearings_hearing_reply_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $form['comment_body']['widget']['#after_build'][] = '_os2web_hearings_remove_textarea_help';
+
+  // Making select html5 required.
+  unset($form['field_os2web_hearings_reply_sp_r']['widget']['#options']['_none']);
+  $form['field_os2web_hearings_reply_sp_r']['widget']['#options'] = array_merge(['' => '- Vælg -'], $form['field_os2web_hearings_reply_sp_r']['widget']['#options']);
 }
 
 /**
@@ -462,8 +466,6 @@ function os2web_hearings_preprocess_node(&$variables) {
     }
 
     $variables['content']['destination'] = \Drupal::request()->server->get('HTTP_REFERER');
-
-
   }
 }
 
