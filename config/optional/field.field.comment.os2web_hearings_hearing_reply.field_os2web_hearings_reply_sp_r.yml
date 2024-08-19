@@ -11,7 +11,7 @@ entity_type: comment
 bundle: os2web_hearings_hearing_reply
 label: 'Jeg udtaler mig som'
 description: ''
-required: true
+required: false
 translatable: false
 default_value: {  }
 default_value_callback: ''

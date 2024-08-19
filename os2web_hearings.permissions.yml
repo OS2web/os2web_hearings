@@ -1,3 +1,6 @@
 administer os2web_hearings configuration:
   title: 'Administer OS2Web Hearings configuration'
   restrict access: true
+skip os2web_hearings speaker role:
+  title: 'Skip Speaker Role selection for OS2Web Hearing comments'
+  restrict access: false
