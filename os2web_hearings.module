@@ -9,6 +9,7 @@ use Drupal\comment\CommentManagerInterface;
 use Drupal\Component\Utility\Mail as MailHelper;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Field\EntityReferenceFieldItemListInterface;
 use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
 use Drupal\node\Entity\Node;
@@ -288,12 +289,21 @@ function os2web_hearings_form_views_exposed_form_alter(&$form, FormStateInterfac
 function os2web_hearings_form_comment_os2web_hearings_hearing_reply_form_alter(&$form, FormStateInterface $form_state, $form_id) {
   $form['comment_body']['widget']['#after_build'][] = '_os2web_hearings_remove_textarea_help';
 
-  if (!\Drupal::currentUser()->hasPermission('skip os2web_hearings speaker role')) {
-    // Making select html5 required.
-    unset($form['field_os2web_hearings_reply_sp_r']['widget']['#options']['_none']);
-    $form['field_os2web_hearings_reply_sp_r']['widget']['#options'] = array_merge(['' => '- Vælg -'], $form['field_os2web_hearings_reply_sp_r']['widget']['#options']);
+  /** @var \Drupal\Core\Entity\EntityForm $form_object */
+  $form_object = $form_state->getFormObject();
+  if ($form_object instanceof EntityForm) {
+    /** @var \Drupal\comment\Entity\Comment $entity */
+    $comment = $form_object->getEntity();
 
-    $form['field_os2web_hearings_reply_sp_r']['widget']['#required'] = TRUE;
+    $node = $comment->getCommentedEntity();
+    if (!$node->field_os2web_hearings_sp_rol_ena->value) {
+      unset($form['field_os2web_hearings_reply_sp_r']);
+    } else {
+      // Making select html5 required.
+      unset($form['field_os2web_hearings_reply_sp_r']['widget']['#options']['_none']);
+      $form['field_os2web_hearings_reply_sp_r']['widget']['#options'] = ['' => '- Vælg -'] + $form['field_os2web_hearings_reply_sp_r']['widget']['#options'];
+      $form['field_os2web_hearings_reply_sp_r']['widget']['#required'] = TRUE;
+    }
   }
 }
 

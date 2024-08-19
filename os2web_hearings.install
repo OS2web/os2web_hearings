@@ -434,3 +434,31 @@ function os2web_hearings_update_8808() {
     ]
   );
 }
+
+/**
+ * Adding field field_os2web_hearings_sp_rol_ena.
+ */
+function os2web_hearing_update_8809() {
+  $path = drupal_get_path('module','os2web_hearings');
+
+  // Create field storage.
+  $storageConfig = Yaml::parse(file_get_contents($path . '/config/optional/field.storage.node.field_os2web_hearings_sp_rol_ena.yml'));
+  if (!FieldStorageConfig::loadByName($storageConfig['entity_type'], $storageConfig['field_name'])) {
+    FieldStorageConfig::create($storageConfig)->save();
+  }
+
+  // Create field instance.
+  $fieldConfig = Yaml::parse(file_get_contents($path . '/config/optional/field.field.node.os2web_hearings_hearing_case.field_os2web_hearings_sp_rol_ena.yml'));
+  if (!FieldConfig::loadByName($fieldConfig['entity_type'], $fieldConfig['bundle'], $fieldConfig['field_name'])) {
+    FieldConfig::create($fieldConfig)->save();
+  }
+
+  os2web_hearings_update_entity_from_yml('core.entity_form_display.node.os2web_hearings_hearing_case.default', 'entity_form_display', 'node.os2web_hearings_hearing_case.default', [
+      'field_os2web_hearings_sp_rol_ena' => 'content.field_os2web_hearings_sp_rol_ena',
+    ]
+  );
+  os2web_hearings_update_entity_from_yml('core.entity_view_display.node.os2web_hearings_hearing_case.default', 'entity_view_display', 'node.os2web_hearings_hearing_case.default', [
+      'field_os2web_hearings_sp_rol_ena' => 'content.field_os2web_hearings_sp_rol_ena',
+    ]
+  );
+}

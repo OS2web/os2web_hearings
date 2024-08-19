@@ -1,0 +1,22 @@
+langcode: da
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_os2web_hearings_sp_rol_ena
+    - node.type.os2web_hearings_hearing_case
+id: node.os2web_hearings_hearing_case.field_os2web_hearings_sp_rol_ena
+field_name: field_os2web_hearings_sp_rol_ena
+entity_type: node
+bundle: os2web_hearings_hearing_case
+label: 'Skal "Jeg udtaler mig som" angives i høringssvaret (Ja/Nej)'
+description: ''
+required: false
+translatable: false
+default_value:
+  -
+    value: 0
+default_value_callback: ''
+settings:
+  on_label: Ja
+  off_label: Nej
+field_type: boolean
