@@ -438,7 +438,7 @@ function os2web_hearings_update_8808() {
 /**
  * Adding field field_os2web_hearings_sp_rol_ena.
  */
-function os2web_hearing_update_8809() {
+function os2web_hearings_update_8809() {
   $path = drupal_get_path('module','os2web_hearings');
 
   // Create field storage.
