@@ -367,7 +367,7 @@ function _os2web_hearings_send_email_notification($node) {
 
       $hearing_attachments[] = [
         'name' => $file->getFilename(),
-        'url' => $file->url(),
+        'url' => $file->createFileUrl(FALSE),
       ];
     }
   }
@@ -393,7 +393,7 @@ function _os2web_hearings_send_email_notification($node) {
 
       $comments_files[$comment->id()][] = [
         'name' => $file->getFilename(),
-        'url' => $file->url(),
+        'url' => $file->createFileUrl(FALSE),
       ];
     }
   }
