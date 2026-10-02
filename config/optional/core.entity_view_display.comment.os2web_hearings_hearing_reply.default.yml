@@ -13,6 +13,7 @@ dependencies:
     - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_name
     - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_org
     - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_secr
+    - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_sp_r
     - field.field.comment.os2web_hearings_hearing_reply.field_os2web_hearings_reply_zip
   module:
     - file
@@ -24,26 +25,26 @@ mode: default
 content:
   comment_body:
     type: text_default
-    weight: 1
-    region: content
     label: hidden
     settings: {  }
     third_party_settings: {  }
+    weight: 1
+    region: content
   field_os2web_hearings_reply_docs:
-    weight: 2
+    type: file_default
     label: hidden
     settings:
       use_description_as_link_text: true
     third_party_settings: {  }
-    type: file_default
+    weight: 2
     region: content
   field_os2web_hearings_reply_name:
-    weight: 0
+    type: string
     label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
-    type: string
+    weight: 0
     region: content
 hidden:
   field_os2web_hearings_reply_addr: true
@@ -53,6 +54,7 @@ hidden:
   field_os2web_hearings_reply_mail: true
   field_os2web_hearings_reply_org: true
   field_os2web_hearings_reply_secr: true
+  field_os2web_hearings_reply_sp_r: true
   field_os2web_hearings_reply_zip: true
   langcode: true
   links: true
