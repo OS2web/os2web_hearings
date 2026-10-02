@@ -359,9 +359,9 @@ function _os2web_hearings_send_email_notification($node) {
       if (!file_exists($file->getFileUri())) {
         continue;
       }
-      $params['files'][] = (object) [
+      $params['attachments'][] = [
         'filename' => $file->getFilename(),
-        'uri' => $file->getFileUri(),
+        'filepath' => \Drupal::service('file_system')->realpath($file->getFileUri()),
         'filemime' => $file->getMimeType(),
       ];
 
@@ -385,9 +385,9 @@ function _os2web_hearings_send_email_notification($node) {
       if (!file_exists($file->getFileUri())) {
         continue;
       }
-      $params['files'][] = (object) [
+      $params['attachments'][] = [
         'filename' => $file->getFilename(),
-        'uri' => $file->getFileUri(),
+        'filepath' => \Drupal::service('file_system')->realpath($file->getFileUri()),
         'filemime' => $file->getMimeType(),
       ];
 
@@ -413,12 +413,11 @@ function _os2web_hearings_send_email_notification($node) {
 
   // Attaching SBSYS XML.
   if ($xmlFileUri) {
-    $xmlFile = (object) [
+    $params['attachments'][] = [
       'filename' => 'sbsys.xml',
-      'uri' => $xmlFileUri,
+      'filepath' => \Drupal::service('file_system')->realpath($xmlFileUri),
       'filemime' => 'application/xml',
     ];
-    $params['files'][] = $xmlFile;
   }
 
   $langcode = \Drupal::languageManager()->getDefaultLanguage()->getId();
